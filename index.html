@@ -1,0 +1,2739 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>X PPLG Skye Digipreneur</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+
+<style>
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:'Poppins',sans-serif;
+}
+
+body{
+background:#0f172a;
+color:white;
+overflow-x:hidden;
+}
+
+/* NAVBAR */
+
+.navbar{
+  overflow: hidden;
+transition: top 0.4s ease, transform 0.3s;
+position: fixed;
+top: 20px;
+left: 50%;
+transform: translateX(-50%);
+display: flex;
+justify-content: space-between;
+align-items: center;
+flex-wrap: nowrap;
+gap: 10px;
+padding: 15px 25px;
+z-index: 999;
+width: calc(100% - 80px);
+max-width: 1100px;
+
+/* HAPUS SCROLL */
+overflow-x: hidden;
+white-space: nowrap;
+
+/* Efek glass */
+background: linear-gradient(
+rgba(2,6,23,0.75),
+rgba(2,6,23,0.55)
+);
+
+backdrop-filter: saturate(180%) blur(16px);
+-webkit-backdrop-filter: saturate(180%) blur(16px);
+border-bottom: 1px solid rgba(255,255,255,0.1);
+border-radius: 10px;
+
+box-shadow:
+0 0 10px #38bdf8,
+0 0 25px #0ea5e9,
+0 8px 20px rgba(0,0,0,0.5);
+
+transition: 
+top 0.4s ease,
+transform 0.3s,
+box-shadow 0.4s ease,
+backdrop-filter 0.4s ease;
+}
+
+.navbar a{
+    color: #ffffff;
+    text-decoration: none;
+    font-weight: 500;
+    transition: 0.3s;
+    position: relative;
+    flex:1;
+text-align:center;
+}
+
+/* Efek glow saat hover */
+.navbar a:hover{
+    color: #38bdf8;
+}
+.navbar a::after{
+    content:"";
+    position:absolute;
+    width:0;
+    height:2px;
+    left:0;
+    bottom:-4px;
+    background:#38bdf8;
+    transition:0.3s;
+}
+.navbar a:hover::after{
+    width:100%;
+}
+
+/* HERO */
+
+.hero{
+
+width:calc(100% - 40px);
+max-width:1100px;
+margin:140px auto 80px auto;
+
+text-align:center;
+padding:60px 20px;
+
+background: linear-gradient(
+rgba(2,6,23,0.75),
+rgba(2,6,23,0.55)
+);
+
+backdrop-filter: saturate(180%) blur(16px);
+-webkit-backdrop-filter: saturate(180%) blur(16px);
+
+border-radius:12px;
+
+border:1px solid rgba(255,255,255,0.1);
+
+box-shadow:0 10px 30px rgba(0,0,0,0.6);
+
+transition:0.4s;
+
+}
+
+.hero:hover{
+
+box-shadow:
+0 0 20px #38bdf8,
+0 0 45px #0ea5e9,
+0 12px 35px rgba(0,0,0,0.7);
+
+transform:translateY(-3px);
+
+}
+
+.hero h1{
+    font-size: 48px;
+    margin-bottom: 20px;
+    color: #38bdf8;
+    text-shadow: 0 0 10px #38bdf8, 0 0 20px #0ea5e9;
+}
+.hero p{
+    opacity: 0.9;
+    text-shadow: 0 0 5px #38bdf8;
+}
+
+.class-photo{
+
+width:160px;
+height:160px;
+border-radius:50%;
+margin-bottom:25px;
+
+border:4px solid #38bdf8;
+
+object-fit:cover;
+
+/* glow dimatikan */
+
+box-shadow:0 0 10px rgba(56,189,248,0.3);
+
+transition:0.4s;
+
+}
+
+.hero:hover .class-photo{
+
+box-shadow:
+0 0 20px #38bdf8,
+0 0 40px #0ea5e9;
+
+transform:scale(1.05);
+
+}
+
+/* SECTION */
+
+.section{
+
+width:calc(100% - 40px);
+max-width:1100px;
+margin:80px auto;
+
+padding:40px 20px;
+
+}
+
+.section-title{
+text-align:center;
+font-size:32px;
+margin-bottom:50px;
+color:#38bdf8;
+text-shadow:0 0 10px #38bdf8,0 0 20px #0ea5e9;
+}
+
+/* CARD */
+
+.card{
+background:#020617;
+padding:30px;
+border-radius:12px;
+border:1px solid #1e293b;
+}
+
+/* STUDENTS */
+
+.students{
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(150px,1fr));
+gap:20px;
+}
+
+.student{
+background:#020617;
+padding:20px;
+border-radius:10px;
+text-align:center;
+border:1px solid #1e293b;
+transition:0.3s;
+}
+
+.student:hover{
+background:#1e293b;
+cursor:pointer;
+transform:translateY(-5px);
+}
+
+.student img{
+width:70px;
+height:70px;
+margin-bottom:10px;
+border-radius:50%;
+}
+
+/* GALLERY */
+
+.gallery{
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(200px,1fr));
+gap:20px;
+}
+
+.gallery img{
+    width: 100%;
+    max-width: 100%;
+    height: auto;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.gallery img:hover{
+transform:scale(1.05);
+}
+
+/* GAME */
+
+#gameArea{
+
+position:relative;
+height:300px;
+background:#020617;
+border-radius:10px;
+overflow:hidden;
+border:1px solid #1e293b;
+
+/* TANPA GLOW */
+
+box-shadow:0 10px 25px rgba(0,0,0,0.6);
+
+transition:0.4s;
+
+}
+
+/* GAME ACTIVE GLOW */
+
+#gameArea.active{
+
+box-shadow:
+0 0 20px #38bdf8,
+0 0 45px #0ea5e9,
+0 10px 35px rgba(0,0,0,0.7);
+
+transform:scale(1.01);
+
+}
+
+.star{
+position:absolute;
+font-size:30px;
+cursor:pointer;
+}
+
+#gameInfo{
+margin-top:20px;
+}
+
+/* CHAT */
+
+.chat-box{
+
+background:#020617;
+padding:20px;
+border-radius:10px;
+border:1px solid #1e293b;
+
+/* TANPA GLOW */
+
+box-shadow:0 10px 25px rgba(0,0,0,0.6);
+
+transition:0.4s;
+
+}
+
+/* CHAT ACTIVE GLOW */
+
+.chat-box.active{
+
+box-shadow:
+0 0 20px #38bdf8,
+0 0 45px #0ea5e9,
+0 10px 35px rgba(0,0,0,0.7);
+
+transform:scale(1.01);
+
+}
+
+#messages{
+height:350px;
+overflow-y:auto;
+margin-bottom:10px;
+
+/* JARAK DARI TEPI CHAT */
+padding-right:30px;
+padding-left:2px;
+}
+
+.msg{
+
+padding:12px 14px;
+background:#1e293b;
+border-radius:10px;
+
+margin-bottom:14px;
+
+box-shadow:0 0 10px rgba(56,189,248,0.4);
+
+line-height:1.5;
+
+}
+
+.msg b{
+color:#38bdf8;
+}
+
+.msg-time{
+font-size:11px;
+opacity:0.7;
+margin-top:4px;
+}
+
+input,button{
+padding:10px;
+border:none;
+border-radius:6px;
+outline:none;
+}
+
+input{
+background:#020617;
+color:white;
+border:1px solid #1e293b;
+box-shadow:0 0 10px #38bdf8;
+}
+
+button{
+background:#38bdf8;
+cursor:pointer;
+}
+
+button:hover{
+opacity:0.9;
+}
+
+/* POPUP PROFILE */
+
+.popup{
+position:fixed;
+top:0;
+left:0;
+width:100%;
+height:100%;
+background:rgba(0,0,0,0.8);
+display:none;
+align-items:center;
+justify-content:center;
+z-index:9999;
+}
+
+.popup-content{
+background:#020617;
+padding:40px;
+border-radius:10px;
+text-align:center;
+box-shadow:0 0 20px #38bdf8,0 0 40px #0ea5e9;
+
+max-width:420px;
+width:90%;
+margin:20px;
+}
+
+/* CLOCK */
+
+.clock{
+    position: fixed;
+    right: 10px;  /* lebih kecil supaya nggak keluar layar */
+    bottom: 10px;
+    background: #020617;
+    padding: 8px 12px; /* dikurangi */
+    border-radius: 10px;
+    border: 1px solid #1e293b;
+    z-index: 999;
+    font-size: 14px;   /* lebih kecil di HP */
+}
+
+/* PARTICLES */
+
+#particles{
+position:fixed;
+top:0;
+left:0;
+width:100%;
+height:100%;
+z-index:-1;
+}
+
+/* IMAGE POPUP */
+
+#imgPopup{
+position:fixed;
+top:0;
+left:0;
+width:100%;
+height:100%;
+background:rgba(0,0,0,0.9);
+display:none;
+align-items:center;
+justify-content:center;
+z-index:9999;
+}
+
+#imgPopup img{
+max-width:90%;
+max-height:90%;
+border-radius:10px;
+}
+
+/* COACH */
+
+.coach-box{
+display:flex;
+justify-content:center;
+margin-bottom:60px;
+}
+
+.coach-card{
+background:#020617;
+padding:30px;
+border-radius:12px;
+text-align:center;
+border:1px solid #1e293b;
+width:220px;
+transition:0.3s;
+}
+
+.coach-card:hover{
+transform:translateY(-5px);
+background:#1e293b;
+}
+
+.coach-card img{
+width:90px;
+height:90px;
+border-radius:50%;
+margin-bottom:10px;
+}
+
+/* MUSIC BUTTON */
+
+.music-btn{
+    position: fixed;
+    left: 10px;   /* lebih kecil supaya nggak keluar layar */
+    bottom: 10px;
+    z-index: 999;
+}
+
+.music-btn button{
+    background:#020617;
+    color:white;
+    border:1px solid #1e293b;
+    padding:12px 16px;
+    border-radius:10px;
+    font-size:18px;
+    cursor:pointer;
+    transition: 0.3s, box-shadow 0.3s, transform 0.3s;
+}
+
+.music-btn button:hover{
+    background:#38bdf8;
+    color:black;
+    transform: translateY(-5px) scale(1.05);
+    box-shadow: 0 0 20px #38bdf8, 0 0 40px #0ea5e9;
+}
+
+body {
+    background: linear-gradient(135deg, #0f172a, #020617);
+    color: #e0e7ff;
+    overflow-x: hidden;
+    min-width: 320px;
+}
+
+/* RESPONSIVE UNTUK MOBILE / TABLET */
+@media (max-width: 768px) {
+
+    #drawCanvas{
+width:100%;
+max-width:100%;
+height:auto;
+}
+
+    /* DRAWING GAME MOBILE FIX */
+
+#games input{
+width:100%;
+margin-bottom:10px;
+}
+
+#games .game-btn{
+width:100%;
+margin-bottom:10px;
+}
+
+#games div[style*="text-align:center"]{
+display:flex;
+flex-direction:column;
+gap:10px;
+}
+
+    /* INTRO OPENING MOBILE FIX */
+
+.intro-title{
+font-size:38px;
+letter-spacing:3px;
+padding:0 20px;
+}
+
+.intro-sub{
+font-size:16px;
+letter-spacing:2px;
+padding:0 20px;
+}
+
+.intro-line{
+width:180px;
+}
+
+.hero,
+.footer{
+
+width:calc(100% - 40px);
+max-width:1100px;
+margin:120px auto 40px auto;
+
+padding:40px 20px;
+
+text-align:center;
+
+background: linear-gradient(
+rgba(2,6,23,0.75),
+rgba(2,6,23,0.55)
+);
+
+backdrop-filter: saturate(180%) blur(16px);
+-webkit-backdrop-filter: saturate(180%) blur(16px);
+
+border-radius:12px;
+
+border:1px solid rgba(255,255,255,0.1);
+
+box-shadow:0 10px 30px rgba(0,0,0,0.6);
+
+transition:0.4s;
+
+}
+
+  .navbar{
+width: 92%;
+padding: 12px 10px;
+gap: 6px;
+}
+
+.navbar a{
+font-size: 13px;
+}
+
+#messages{
+height:500px;
+}
+  
+    .hero h1 {
+        font-size: 32px; /* judul lebih kecil di HP */
+    }
+
+    .hero p {
+        font-size: 16px;
+    }
+
+    .student img, .coach-card img {
+        width: 60px;
+        height: 60px;
+    }
+
+    .coach-card, .student {
+        padding: 15px; /* lebih pas di layar kecil */
+    }
+
+    .gallery img {
+        border-radius: 8px;
+    }
+
+    .navbar a {
+        font-size: 14px;
+        padding: 5px 8px;
+    }
+
+    .music-btn button {
+        padding: 8px 12px;
+        font-size: 16px;
+    }
+
+    .music-btn button{
+    box-shadow: 0 0 10px #38bdf8, 0 0 20px #0ea5e9;
+}
+
+    .clock {
+        font-size: 12px;
+        padding: 6px 10px;
+    }
+
+    .clock {
+    box-shadow: 0 0 10px #38bdf8, 0 0 20px #0ea5e9;
+}
+}
+
+.card, .student, .coach-card, .gallery img {
+    transition: 0.3s, box-shadow 0.3s;
+}
+
+.card:hover, .student:hover, .coach-card:hover, .gallery img:hover {
+transform: translateY(-5px) scale(1.03);
+box-shadow: 0 0 20px #38bdf8, 0 0 40px #0ea5e9;
+}
+
+/* NAVBAR GLOW SAAT HOVER */
+
+.navbar:hover{
+
+box-shadow:
+0 0 20px #38bdf8,
+0 0 45px #0ea5e9,
+0 12px 35px rgba(0,0,0,0.7);
+
+backdrop-filter: saturate(200%) blur(18px);
+-webkit-backdrop-filter: saturate(200%) blur(18px);
+
+}
+
+.clock {
+    box-shadow: 0 0 10px #38bdf8, 0 0 20px #0ea5e9;
+    text-shadow: 0 0 10px #38bdf8, 0 0 20px #0ea5e9;
+}
+
+.game-btn, .chat-btn {
+    background:#020617;
+    color:white;
+    border:1px solid #1e293b;
+    padding:10px 16px;
+    border-radius:10px;
+    font-size:16px;
+    cursor:pointer;
+    transition: 0.3s, box-shadow 0.3s, transform 0.3s;
+}
+
+.game-btn:hover, .chat-btn:hover {
+    background:#38bdf8;
+    color:black;
+    transform: translateY(-5px) scale(1.05);
+    box-shadow: 0 0 20px #38bdf8, 0 0 40px #0ea5e9;
+}
+
+.snake-segment {
+    position: absolute;
+    width: 20px;
+    height: 20px;
+    font-size: 18px;
+    line-height: 20px;
+    text-align: center;
+    transition: 0.1s;
+    color: #38bdf8;
+    text-shadow: 0 0 10px #38bdf8, 0 0 20px #0ea5e9;
+}
+.food {
+position: absolute;
+width: 20px;
+height: 20px;
+font-size: 18px;
+line-height: 20px;
+text-align: center;
+text-shadow:0 0 10px #38bdf8,0 0 20px #0ea5e9;
+}
+
+.close-btn{
+
+background:#020617;
+color:white;
+border:1px solid #1e293b;
+padding:10px 18px;
+border-radius:10px;
+
+box-shadow:0 0 10px #38bdf8;
+
+transition:0.3s;
+
+}
+
+.close-btn:hover{
+
+background:#38bdf8;
+color:black;
+
+transform:scale(1.05);
+
+box-shadow:
+0 0 20px #38bdf8,
+0 0 40px #0ea5e9;
+
+}
+
+/* =========================
+FLOATING BUTTON HIDE SYSTEM
+========================= */
+
+.hide-floating{
+opacity:0;
+transform:translateY(40px);
+pointer-events:none;
+transition:0.3s;
+}
+
+/* =========================
+LOADING SCREEN
+========================= */
+
+#loader{
+position:fixed;
+top:0;
+left:0;
+width:100%;
+height:100%;
+background:#020617;
+display:flex;
+align-items:center;
+justify-content:center;
+z-index:10000;
+flex-direction:column;
+}
+
+/* animasi lingkaran */
+
+.loader-circle{
+
+width:80px;
+height:80px;
+border:6px solid rgba(56,189,248,0.2);
+border-top:6px solid #38bdf8;
+border-radius:50%;
+
+animation:spin 1s linear infinite;
+
+box-shadow:
+0 0 20px #38bdf8,
+0 0 40px #0ea5e9;
+
+margin-bottom:20px;
+
+}
+
+/* teks loading */
+
+.loader-content h2{
+
+color:#38bdf8;
+text-shadow:0 0 10px #38bdf8,0 0 20px #0ea5e9;
+font-weight:500;
+
+}
+
+/* animasi spin */
+
+@keyframes spin{
+
+0%{
+transform:rotate(0deg);
+}
+
+100%{
+transform:rotate(360deg);
+}
+
+}
+
+/* =========================
+INTRO OPENING SCREEN
+========================= */
+
+#intro{
+position:fixed;
+top:0;
+left:0;
+width:100%;
+height:100%;
+background:radial-gradient(circle at center,#020617,#000814);
+display:flex;
+align-items:center;
+justify-content:center;
+flex-direction:column;
+z-index:9999;
+
+opacity:0;
+pointer-events:none;
+
+transition:opacity 1.2s ease;
+}
+
+/* background glow pulse */
+
+#intro::before{
+content:"";
+position:absolute;
+width:400px;
+height:400px;
+background:radial-gradient(circle,#38bdf8,transparent 70%);
+filter:blur(120px);
+opacity:0.4;
+
+animation:introGlow 4s infinite alternate;
+}
+
+@keyframes introGlow{
+0%{transform:scale(0.8);opacity:0.3;}
+100%{transform:scale(1.2);opacity:0.6;}
+}
+
+.intro-content{
+text-align:center;
+position:relative;
+z-index:2;
+}
+
+/* TITLE */
+
+.intro-title{
+font-size:clamp(36px,6vw,72px);
+letter-spacing:6px;
+
+color:#38bdf8;
+
+text-shadow:
+0 0 20px #38bdf8,
+0 0 40px #0ea5e9,
+0 0 80px #38bdf8;
+
+animation:introTitle 2.5s ease forwards;
+opacity:0;
+}
+
+@keyframes introTitle{
+
+0%{
+opacity:0;
+transform:translateY(60px) scale(0.7);
+}
+
+60%{
+opacity:1;
+transform:translateY(-10px) scale(1.05);
+}
+
+100%{
+opacity:1;
+transform:translateY(0) scale(1);
+}
+
+}
+
+/* SUBTITLE */
+
+.intro-sub{
+margin-top:20px;
+font-size:20px;
+letter-spacing:4px;
+opacity:0.8;
+
+animation:introSub 3s ease forwards;
+opacity:0;
+}
+
+@keyframes introSub{
+
+0%{
+opacity:0;
+transform:translateY(40px);
+}
+
+100%{
+opacity:0.9;
+transform:translateY(0);
+}
+
+}
+
+/* NEON LINE */
+
+.intro-line{
+
+width:0;
+height:4px;
+
+margin:30px auto;
+
+background:linear-gradient(90deg,#38bdf8,#0ea5e9);
+
+box-shadow:
+0 4px 12px rgba(0,0,0,0.6),
+0 0 10px #38bdf8,
+0 0 20px #0ea5e9;
+
+animation:introLine 2.5s ease forwards;
+
+}
+
+@keyframes introLine{
+
+0%{
+width:0;
+opacity:0;
+}
+
+100%{
+width:260px;
+opacity:1;
+}
+
+}
+
+/* =========================
+FOOTER HERO STYLE
+========================= */
+
+.footer{
+
+max-width:1100px;
+
+margin:120px auto 40px auto;
+width:calc(100% - 40px);
+
+padding:40px 20px;
+
+text-align:center;
+
+background: linear-gradient(
+rgba(2,6,23,0.75),
+rgba(2,6,23,0.55)
+);
+
+backdrop-filter: saturate(180%) blur(16px);
+-webkit-backdrop-filter: saturate(180%) blur(16px);
+
+border-radius:12px;
+
+border:1px solid rgba(255,255,255,0.1);
+
+/* TANPA GLOW */
+
+box-shadow:0 10px 30px rgba(0,0,0,0.6);
+
+transition:0.4s;
+
+}
+
+.footer:hover{
+
+box-shadow:
+0 0 20px #38bdf8,
+0 0 45px #0ea5e9,
+0 12px 35px rgba(0,0,0,0.7);
+
+transform:translateY(-3px);
+
+}
+
+/* copyright text */
+
+.footer .copyright{
+
+font-size:20px;
+color:#38bdf8;
+
+text-shadow:
+0 0 10px #38bdf8,
+0 0 25px #0ea5e9,
+0 0 45px rgba(56,189,248,0.7);
+
+margin-bottom:10px;
+
+}
+
+/* developer text */
+
+.footer .developer{
+
+font-size:15px;
+opacity:0.8;
+
+text-shadow:
+0 0 6px rgba(56,189,248,0.6);
+
+}
+
+
+
+/* =========================
+BACK TO TOP BUTTON
+========================= */
+
+#backToTop{
+
+position:fixed;
+right:20px;
+bottom:70px;
+
+z-index:999;
+
+isolation:isolate;
+
+transform:translateZ(0); /* TAMBAH INI */
+
+background:#020617;
+
+backdrop-filter: blur(6px);
+
+border:1px solid #1e293b;
+
+padding:14px 16px;
+
+border-radius:12px;
+
+font-size:18px;
+
+cursor:pointer;
+
+color:white;
+
+opacity:0;
+pointer-events:none;
+
+transition:0.3s;
+
+box-shadow:
+0 0 10px #38bdf8,
+0 0 25px #0ea5e9;
+
+}
+
+/* hover animation */
+
+#backToTop:hover{
+
+background:#38bdf8;
+color:black;
+
+transform:translateY(-6px) scale(1.05);
+
+box-shadow:
+0 0 15px #38bdf8,
+0 0 30px #0ea5e9;
+
+}
+
+/* muncul */
+
+#backToTop.show{
+
+opacity:1;
+pointer-events:auto;
+
+}
+
+/* =========================
+CHAT SCROLLBAR STYLE
+========================= */
+
+/* width scrollbar */
+#messages::-webkit-scrollbar{
+width:12px;
+}
+
+/* background track */
+#messages::-webkit-scrollbar-track{
+background:#020617;
+border-radius:10px;
+}
+
+/* scrollbar thumb */
+#messages::-webkit-scrollbar-thumb{
+
+background:linear-gradient(
+180deg,
+#38bdf8,
+#0ea5e9
+);
+
+border-radius:10px;
+
+border:2px solid rgba(255,255,255,0.15);
+
+/* efek depth */
+box-shadow:
+
+/* highlight atas */
+inset 0 2px 4px rgba(255,255,255,0.3),
+
+/* shadow bawah */
+inset 0 -3px 6px rgba(0,0,0,0.4),
+
+/* glow luar */
+0 0 10px #38bdf8,
+0 0 20px #0ea5e9;
+
+transition:0.2s;
+
+}
+
+/* EFFECT SAAT SCROLLBAR DI DRAG */
+
+#messages::-webkit-scrollbar-thumb:active{
+
+background:linear-gradient(
+180deg,
+#7dd3fc,
+#38bdf8
+);
+
+/* glow lebih kuat */
+box-shadow:
+
+inset 0 2px 5px rgba(255,255,255,0.4),
+inset 0 -4px 8px rgba(0,0,0,0.6),
+
+0 0 20px #38bdf8,
+0 0 40px #0ea5e9,
+0 0 70px #38bdf8;
+
+}
+
+#drawCanvas{
+touch-action:none;
+}
+
+/* =========================
+WINNER POPUP FIX
+========================= */
+
+.winner-box{
+
+width:calc(100% - 40px);
+max-width:600px;
+
+margin:auto;
+
+background:#020617;
+
+padding:40px 20px;
+
+border-radius:12px;
+
+text-align:center;
+
+border:1px solid #1e293b;
+
+box-shadow:
+0 0 25px #38bdf8,
+0 0 50px #0ea5e9;
+
+}
+
+</style>
+</head>
+
+<body>
+
+<div id="loader">
+
+<div class="loader-content">
+
+<div class="loader-circle"></div>
+
+<h2>Loading Class Website...</h2>
+
+</div>
+
+</div>
+
+<div id="intro">
+
+<div class="intro-content">
+
+<h1 class="intro-title">X PPLG Skye Digipreneur</h1>
+
+<p class="intro-sub">Welcome To Our Galaxy</p>
+
+<div class="intro-line"></div>
+
+</div>
+
+</div>
+
+<nav class="navbar">
+
+<a href="#about">About</a>
+<a href="#students">Member</a>
+<a href="#gallery">Gallery</a>
+<a href="#games">Games</a>
+<a href="#chat">Chat</a>
+
+</nav>
+
+<audio id="bgMusic" preload="auto">
+<source src="music.mp3" type="audio/mpeg">
+</audio>
+
+<section id="home" class="hero">
+
+<img src="class-photo.jpg" class="class-photo">
+
+<h1>X PPLG</h1>
+<p>Official Class Website</p>
+
+</section>
+
+<section id="about" class="section">
+
+<h2 class="section-title">About Our Class</h2>
+
+<div class="card">
+
+<p>
+Welcome to the official X PPLG Skye Digipreneur website. This website features student and homeroom coach profiles, gallery activities, mini games, and live chat for our classroom community.
+</p>
+
+</div>
+
+</section>
+
+
+<section id="students" class="section">
+
+<h2 class="section-title">Homeroom Coach</h2>
+
+<div class="coach-box">
+
+<div class="coach-card coach">
+<img src="coach.jpg">
+<h3>Reni Ritasari, S.Pd., Gr.</h3>
+<p>Class Coach</p>
+</div>
+
+</div>
+
+<h2 class="section-title">Students</h2>
+
+<div class="students">
+
+<div class="student">
+<img src="https://api.dicebear.com/7.x/bottts/svg?seed=Student1">
+<p>Ahmad Al Bazsyadad Trisandhy</p>
+</div>
+
+<div class="student">
+<img src="Ahmad Zaidan Al Jabar.jpeg">
+<p>Ahmad Zaidan Al Jabar</p>
+</div>
+
+<div class="student">
+<img src="https://api.dicebear.com/7.x/bottts/svg?seed=Student3">
+<p>Arga Bintang Prayoga</p>
+</div>
+
+<div class="student">
+<img src="https://api.dicebear.com/7.x/bottts/svg?seed=Student4">
+<p>Arva Nadhif Fadhil Lazzuardy</p>
+</div>
+
+<div class="student">
+<img src="https://api.dicebear.com/7.x/bottts/svg?seed=Student5">
+<p>Athaya Amira Rhea</p>
+</div>
+
+<div class="student">
+<img src="https://api.dicebear.com/7.x/bottts/svg?seed=Student6">
+<p>Bagas Yusfa Adhila</p>
+</div>
+
+<div class="student">
+<img src="Centaka Ihsan Permana.jpeg">
+<p>Centaka Ihsan Permana</p>
+</div>
+
+<div class="student">
+<img src="https://api.dicebear.com/7.x/bottts/svg?seed=Student8">
+<p>Fahirah Nur Annisa Sofyan</p>
+</div>
+
+<div class="student">
+<img src="Faikar Herdiansyah.jpeg">
+<p>Faikar Herdiansyah</p>
+</div>
+
+<div class="student">
+<img src="https://api.dicebear.com/7.x/bottts/svg?seed=Student10">
+<p>Faishal Herdiansyah</p>
+</div>
+
+<div class="student">
+<img src="https://api.dicebear.com/7.x/bottts/svg?seed=Student11">
+<p>Firyal Raita Kasturi</p>
+</div>
+
+<div class="student">
+<img src="Kevin Al Faridzi.jpg">
+<p>Kevin Al Faridzi</p>
+</div>
+
+<div class="student">
+<img src="https://api.dicebear.com/7.x/bottts/svg?seed=Student13">
+<p>Lutfi Priatna Ziadayatul Iman</p>
+</div>
+
+<div class="student">
+<img src="https://api.dicebear.com/7.x/bottts/svg?seed=Student14">
+<p>Miftahul Husna</p>
+</div>
+
+<div class="student">
+<img src="https://api.dicebear.com/7.x/bottts/svg?seed=Student15">
+<p>Muhamad Bintang Dhiaurahman Jabulani</p>
+</div>
+
+<div class="student">
+<img src="https://api.dicebear.com/7.x/bottts/svg?seed=Student16">
+<p>Muhamad Hadian Saffan</p>
+</div>
+
+<div class="student">
+<img src="https://api.dicebear.com/7.x/bottts/svg?seed=Student17">
+<p>Muhammad Daffa Mikala Rasyid</p>
+</div>
+
+<div class="student">
+<img src="https://api.dicebear.com/7.x/bottts/svg?seed=Student18">
+<p>Muhammad Reyno Razzaq Ghani</p>
+</div>
+
+<div class="student">
+<img src="https://api.dicebear.com/7.x/bottts/svg?seed=Student19">
+<p>Nazril Ilham Nandyta</p>
+</div>
+
+<div class="student">
+<img src="https://api.dicebear.com/7.x/bottts/svg?seed=Student20">
+<p>Rava Achmad Permana</p>
+</div>
+
+<div class="student">
+<img src="https://api.dicebear.com/7.x/bottts/svg?seed=Student21">
+<p>Razka Safa Cahaya</p>
+</div>
+
+<div class="student">
+<img src="Ryoga Al Fadhilah.jpeg">
+<p>Ryoga Al Fadhilah</p>
+</div>
+
+<div class="student">
+<img src="https://api.dicebear.com/7.x/bottts/svg?seed=Student23">
+<p>Shalika Azzalia Ghaniya Sabarain</p>
+</div>
+
+<div class="student">
+<img src="https://api.dicebear.com/7.x/bottts/svg?seed=Student24">
+<p>Shyfa Nur Afiah</p>
+</div>
+
+<div class="student">
+<img src="https://api.dicebear.com/7.x/bottts/svg?seed=Student25">
+<p>Syota Satria Yabuki</p>
+</div>
+
+<div class="student">
+<img src="https://api.dicebear.com/7.x/bottts/svg?seed=Student26">
+<p>Vina Suci Lestari</p>
+</div>
+
+<div class="student">
+<img src="https://api.dicebear.com/7.x/bottts/svg?seed=Student27">
+<p>Virly Aurel Kamila Zahra</p>
+</div>
+
+<div class="student">
+<img src="https://api.dicebear.com/7.x/bottts/svg?seed=Student28">
+<p>Yusuf Farrel Sukmana</p>
+</div>
+
+<div class="student">
+<img src="https://api.dicebear.com/7.x/bottts/svg?seed=Student29">
+<p>Zibran Pratama Putra</p>
+</div>
+
+</div>
+
+</section>
+
+
+<section id="gallery" class="section">
+
+<h2 class="section-title">Gallery</h2>
+
+<div class="gallery">
+
+<img src="gallery1.jpg">
+<img src="gallery2.jpg">
+<img src="gallery3.jpg">
+<img src="gallery4.jpg">
+
+</div>
+
+</section>
+
+
+<section id="games" class="section">
+
+<h2 class="section-title">Multiplayer Drawing Guess</h2>
+
+<div style="text-align:center;margin-bottom:20px;">
+<input id="playerName" placeholder="Your name">
+<button class="game-btn" id="createBtn" onclick="createGame()">Create Game</button>
+<button class="game-btn" id="joinBtn" onclick="joinGame()" style="display:none;">Join Game</button>
+</div>
+
+<div id="drawingGame" style="display:none;text-align:center;">
+
+<p id="gameStatus">Waiting players...</p>
+
+<canvas id="drawCanvas" width="400" height="400"
+style="background:white;border-radius:10px;border:1px solid #1e293b;"></canvas>
+
+<br><br>
+<button id="endGameBtn" class="game-btn" style="display:none;" onclick="endGame()">End Game</button>
+
+<br><br>
+
+<div id="guessArea">
+<input id="guessInput" placeholder="Guess the word">
+<button class="game-btn" onclick="sendGuess()">Guess</button>
+</div>
+
+<div id="guessChat" style="margin-top:20px;height:120px;overflow:auto;"></div>
+
+</div>
+</section>
+
+
+<section id="chat" class="section">
+
+<h2 class="section-title">Class Chat</h2>
+
+<div class="chat-box">
+
+<div id="messages"></div>
+
+<input id="username" placeholder="username">
+
+<br><br>
+
+<input id="message" placeholder="message">
+
+<button class="chat-btn" onclick="sendMessage()">Send</button>
+
+</div>
+
+</section>
+
+
+<canvas id="particles"></canvas>
+
+
+<div class="popup" id="profilePopup">
+
+<div class="popup-content">
+
+<img id="studentImg" style="
+width:100px;
+height:100px;
+border-radius:50%;
+margin-bottom:15px;
+border:3px solid #38bdf8;
+box-shadow:0 0 15px #38bdf8,0 0 30px #0ea5e9;
+">
+
+<h2 id="studentName"></h2>
+
+<p id="studentDesc">Student description</p>
+
+<br>
+
+<img id="studentProject" style="
+width:200px;
+border-radius:10px;
+margin-top:15px;
+cursor:pointer;
+border:2px solid #38bdf8;
+box-shadow:0 0 10px #38bdf8,0 0 20px #0ea5e9;
+">
+
+<br><br>
+
+<button class="game-btn close-btn" onclick="closePopup()">Close</button>
+
+</div>
+
+</div>
+
+<div class="music-btn">
+<button onclick="toggleMusic()">🎵</button>
+</div>
+
+<div class="clock" id="clock"></div>
+
+<button id="backToTop">⬆</button>
+
+<div id="imgPopup">
+<img id="popupImg">
+</div>
+
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-database-compat.js"></script>
+
+<script>
+
+document.addEventListener("DOMContentLoaded", function(){
+
+/* =========================
+MUSIC SYSTEM (SMART LOOP + FADE)
+========================= */
+
+const music = document.getElementById("bgMusic")
+
+let fadeInterval = null
+let loopChecker = null
+let musicActive = false
+
+/* FADE IN */
+
+function fadeInMusic(){
+
+clearInterval(fadeInterval)
+
+music.volume = 0
+
+music.play().catch(()=>{})
+
+fadeInterval = setInterval(()=>{
+
+if(music.volume < 0.5){
+
+music.volume += 0.02
+
+}else{
+
+clearInterval(fadeInterval)
+
+}
+
+},60)
+
+}
+
+/* FADE OUT */
+
+function fadeOutMusic(callback){
+
+clearInterval(fadeInterval)
+
+fadeInterval = setInterval(()=>{
+
+if(music.volume > 0.02){
+
+music.volume -= 0.02
+
+}else{
+
+clearInterval(fadeInterval)
+
+music.pause()
+
+if(callback) callback()
+
+}
+
+},60)
+
+}
+
+/* START LOOP SYSTEM */
+
+function startLoopChecker(){
+
+clearInterval(loopChecker)
+
+loopChecker = setInterval(()=>{
+
+if(!musicActive) return
+
+let timeLeft = music.duration - music.currentTime
+
+/* jika sisa lagu 3 detik */
+
+if(timeLeft <= 3){
+
+clearInterval(loopChecker)
+
+fadeOutMusic(()=>{
+
+music.currentTime = 0
+
+fadeInMusic()
+
+startLoopChecker()
+
+})
+
+}
+
+},500)
+
+}
+
+/* TOGGLE MUSIC BUTTON */
+
+window.toggleMusic = function(){
+
+if(!musicActive){
+
+musicActive = true
+
+fadeInMusic()
+
+startLoopChecker()
+
+}else{
+
+musicActive = false
+
+clearInterval(loopChecker)
+
+fadeOutMusic()
+
+}
+
+}
+
+document.addEventListener("visibilitychange",()=>{
+
+/* jika tab tidak aktif */
+
+if(document.hidden){
+
+if(musicActive){
+
+fadeOutMusic()
+
+}
+
+}
+
+/* jika user kembali ke tab */
+
+else{
+
+if(musicActive){
+
+fadeInMusic()
+
+}
+
+}
+
+})
+
+
+/* =========================
+PARTICLES BACKGROUND
+========================= */
+
+const canvas = document.getElementById("particles")
+const ctx = canvas.getContext("2d")
+
+function resizeCanvas(){
+
+canvas.width = window.innerWidth
+canvas.height = window.innerHeight
+
+}
+
+resizeCanvas()
+
+window.addEventListener("resize",resizeCanvas)
+
+let particles=[]
+
+for(let i=0;i<120;i++){
+
+particles.push({
+x:Math.random()*canvas.width,
+y:Math.random()*canvas.height,
+vx:(Math.random()-0.5)*0.5,
+vy:(Math.random()-0.5)*0.5,
+size:Math.random()*2
+})
+
+}
+
+function animateParticles(){
+
+ctx.clearRect(0,0,canvas.width,canvas.height)
+
+particles.forEach(p=>{
+
+p.x+=p.vx
+p.y+=p.vy
+
+if(p.x<0||p.x>canvas.width)p.vx*=-1
+if(p.y<0||p.y>canvas.height)p.vy*=-1
+
+ctx.beginPath()
+ctx.arc(p.x,p.y,p.size,0,Math.PI*2)
+ctx.fillStyle="#38bdf8"
+ctx.fill()
+
+})
+
+requestAnimationFrame(animateParticles)
+
+}
+
+ctx.fillStyle = `rgba(56,189,248,0.8)`; // biru neon
+ctx.shadowColor = '#38bdf8';
+ctx.shadowBlur = 10;
+
+animateParticles()
+
+
+/* =========================
+GALLERY POPUP
+========================= */
+
+const galleryImages = document.querySelectorAll(".gallery img")
+const imgPopup = document.getElementById("imgPopup")
+const popupImg = document.getElementById("popupImg")
+
+galleryImages.forEach(img=>{
+
+img.addEventListener("click",()=>{
+
+imgPopup.style.display="flex"
+popupImg.src = img.src
+
+})
+
+})
+
+imgPopup.addEventListener("click",()=>{
+
+imgPopup.style.display="none"
+
+})
+
+
+/* =========================
+STUDENT POPUP WITH UNIQUE DESCRIPTION
+========================= */
+
+const students = document.querySelectorAll(".student, .coach")
+const popup = document.getElementById("profilePopup")
+const studentName = document.getElementById("studentName")
+const studentDesc = document.getElementById("studentDesc")
+const studentImg = document.getElementById("studentImg")
+const studentProject = document.getElementById("studentProject")
+
+const studentDescriptions = {
+
+"Reni Ritasari, S.Pd., Gr.":"Our class coach who guides and supports the class in learning and activities.",
+
+"Kevin Al Faridzi":"A creative student who enjoys building projects, websites, games, and digital ideas.",
+
+}
+
+const studentProjects = {
+
+"Reni Ritasari, S.Pd., Gr.":"project coach.jpg",
+
+"Kevin Al Faridzi":"project kevin.png",
+
+}
+
+students.forEach(student => {
+  student.addEventListener("click", function() {
+    
+    // Jika ini coach, ambil <h3>, kalau student, ambil <p>
+    let name;
+    if (this.classList.contains("coach")) {
+      name = this.querySelector("h3").innerText;
+    } else {
+      name = this.querySelector("p").innerText;
+    }
+
+studentName.innerText = name;
+studentDesc.innerText = studentDescriptions[name] || "A member of our class.";
+
+// ambil foto dari card student / coach
+let img = this.querySelector("img").src;
+studentImg.src = img;
+studentProject.src = studentProjects[name] || "default-project.jpg";
+
+popup.style.display = "flex";
+  });
+});
+
+window.closePopup=function(){
+
+popup.style.display="none"
+
+}
+
+
+/* =========================
+CLOCK
+========================= */
+
+function updateClock(){
+
+const now=new Date()
+
+let h=now.getHours()
+let m=now.getMinutes()
+let s=now.getSeconds()
+
+if(m<10)m="0"+m
+if(s<10)s="0"+s
+
+document.getElementById("clock").innerText=h+":"+m+":"+s
+
+}
+
+setInterval(updateClock,1000)
+updateClock()
+
+
+/* =========================
+SMOOTH SCROLL
+========================= */
+
+document.querySelectorAll('a[href^="#"]').forEach(anchor=>{
+
+anchor.addEventListener("click",function(e){
+
+e.preventDefault()
+
+document.querySelector(this.getAttribute("href")).scrollIntoView({
+behavior:"smooth"
+})
+
+})
+
+})
+
+
+/* =========================
+FIREBASE CHAT
+========================= */
+
+const firebaseConfig = {
+  apiKey: "AIzaSyA6jqVpkIKrM-zK4hL00byY05pt547J68w",
+  authDomain: "class-website-chat.firebaseapp.com",
+  databaseURL: "https://class-website-chat-default-rtdb.asia-southeast1.firebasedatabase.app",
+  projectId: "class-website-chat",
+  storageBucket: "class-website-chat.firebasestorage.app",
+  messagingSenderId: "5946910519",
+  appId: "1:5946910519:web:cfef9e7a474a42a8ffdcb2",
+  measurementId: "G-QCF73PJG6T"
+};
+
+firebase.initializeApp(firebaseConfig)
+
+const db = firebase.database()
+const messagesDiv = document.getElementById("messages")
+
+/* =========================
+MULTIPLAYER DRAWING GAME
+========================= */
+
+const canvasDraw = document.getElementById("drawCanvas")
+const ctxDraw = canvasDraw.getContext("2d")
+
+let player=""
+let drawing=false
+let isDrawer=false
+let currentWord=""
+let winnerAnnounced = false
+
+const words=[
+"kucing","mobil","rumah","gunung","pohon",
+"ikan","pesawat","bintang","buku","sepeda"
+]
+
+const gameRef=db.ref("drawingGame")
+
+/* RESET GAME SAAT PAGE LOAD */
+gameRef.remove()
+
+let canvasListening=false
+
+/* CEK GAME SAAT HALAMAN DIBUKA */
+
+gameRef.on("value",(snap)=>{
+
+const data = snap.val()
+
+const createBtn = document.getElementById("createBtn")
+const joinBtn = document.getElementById("joinBtn")
+const playerInput = document.getElementById("playerName")
+const drawingGame = document.getElementById("drawingGame")
+
+/* JIKA ADA DATA GAME TAPI TIDAK ADA PLAYER (GAME LAMA) */
+
+if(data && !data.drawer){
+
+gameRef.remove()
+return
+
+}
+
+/* jika tidak ada game */
+
+if(!data){
+
+drawingGame.style.display="none"
+
+ctxDraw.clearRect(0,0,canvasDraw.width,canvasDraw.height)
+
+playerInput.style.display="inline-block"
+
+createBtn.style.display="inline-block"
+joinBtn.style.display="none"
+
+return
+
+}
+
+/* jika game ada */
+
+if(data.drawer){
+
+/* cek apakah canvas kosong */
+
+if(!data.canvas || Object.keys(data.canvas).length === 0){
+
+/* berarti game belum benar-benar dimulai */
+
+createBtn.style.display="inline-block"
+joinBtn.style.display="none"
+
+}else{
+
+createBtn.style.display="none"
+joinBtn.style.display="inline-block"
+
+}
+
+playerInput.style.display="inline-block"
+
+}
+
+/* jika game sudah mulai */
+
+if(data.word){
+
+createBtn.style.display="none"
+joinBtn.style.display="inline-block"
+playerInput.style.display="inline-block"
+
+}
+
+})
+
+
+
+/* CREATE GAME */
+
+window.createGame=function(){
+
+document.getElementById("endGameBtn").style.display="inline-block"
+
+player=document.getElementById("playerName").value.trim()
+
+if(player===""){
+alert("Enter your name")
+return
+}
+
+const word=words[Math.floor(Math.random()*words.length)]
+
+currentWord=word
+isDrawer=true
+
+gameRef.set({
+drawer:player,
+word:word,
+canvas:{},
+started:true
+})
+
+document.getElementById("drawingGame").style.display="block"
+
+document.getElementById("playerName").style.display="none"
+document.getElementById("createBtn").style.display="none"
+document.getElementById("joinBtn").style.display="none"
+
+document.getElementById("guessArea").style.display="none"
+
+document.getElementById("gameStatus").innerText="Draw this: "+word
+
+ctxDraw.clearRect(0,0,canvasDraw.width,canvasDraw.height)
+
+document.getElementById("guessChat").innerHTML=""
+gameRef.child("guesses").remove()
+
+/* aktifkan mode gambar */
+
+canvasDraw.style.cursor="crosshair"
+
+listenCanvas()
+
+}
+
+/* JOIN GAME */
+
+window.joinGame=function(){
+
+player=document.getElementById("playerName").value.trim()
+
+if(player===""){
+alert("Enter your name")
+return
+}
+
+gameRef.once("value",(snap)=>{
+
+const data=snap.val()
+
+if(!data){
+alert("No game available")
+return
+}
+
+currentWord=data.word
+isDrawer=false
+
+document.getElementById("drawingGame").style.display="block"
+
+document.getElementById("playerName").style.display="none"
+document.getElementById("createBtn").style.display="none"
+document.getElementById("joinBtn").style.display="none"
+
+document.getElementById("endGameBtn").style.display="none"
+
+document.getElementById("guessArea").style.display="block"
+
+document.getElementById("gameStatus").innerText="Guess the drawing!"
+
+/* nonaktifkan gambar */
+
+canvasDraw.style.cursor="not-allowed"
+
+})
+
+listenCanvas()
+
+}
+
+/* DRAW SYSTEM */
+
+canvasDraw.addEventListener("mousedown",()=>{
+
+if(!isDrawer)return
+drawing=true
+
+})
+
+canvasDraw.addEventListener("mouseup",()=>{
+
+drawing=false
+
+})
+
+canvasDraw.addEventListener("mousemove",(e)=>{
+
+if(!drawing||!isDrawer)return
+
+const rect=canvasDraw.getBoundingClientRect()
+
+const x=e.clientX-rect.left
+const y=e.clientY-rect.top
+
+ctxDraw.fillStyle="black"
+
+ctxDraw.beginPath()
+
+ctxDraw.arc(x,y,3,0,Math.PI*2)
+
+ctxDraw.fill()
+
+gameRef.child("canvas").push({x,y})
+
+})
+
+/* TOUCH SUPPORT FOR MOBILE */
+
+canvasDraw.addEventListener("touchstart",(e)=>{
+
+if(!isDrawer)return
+drawing=true
+
+})
+
+canvasDraw.addEventListener("touchend",(e)=>{
+
+drawing=false
+
+})
+
+canvasDraw.addEventListener("touchmove",(e)=>{
+
+if(!drawing || !isDrawer) return
+
+e.preventDefault()
+
+const rect = canvasDraw.getBoundingClientRect()
+
+const touch = e.touches[0]
+
+const x = touch.clientX - rect.left
+const y = touch.clientY - rect.top
+
+ctxDraw.fillStyle="black"
+
+ctxDraw.beginPath()
+ctxDraw.arc(x,y,3,0,Math.PI*2)
+ctxDraw.fill()
+
+gameRef.child("canvas").push({x,y})
+
+},{passive:false})
+
+/* SYNC CANVAS */
+
+function listenCanvas(){
+
+if(canvasListening) return
+canvasListening=true
+
+gameRef.child("canvas").on("child_added",(snap)=>{
+
+const d=snap.val()
+
+ctxDraw.fillStyle="black"
+
+ctxDraw.beginPath()
+
+ctxDraw.arc(d.x,d.y,3,0,Math.PI*2)
+
+ctxDraw.fill()
+
+})
+
+}
+
+/* GUESS SYSTEM */
+
+window.sendGuess=function(){
+
+if(isDrawer) return
+
+const guess=document.getElementById("guessInput").value.trim().toLowerCase()
+
+if(guess==="") return
+
+gameRef.child("guesses").push({
+player:player,
+text:guess
+})
+
+document.getElementById("guessInput").value=""
+
+}
+
+gameRef.child("guesses").on("child_added",(snap)=>{
+
+const g=snap.val()
+
+const guessText = g.text.trim().toLowerCase()
+const correctWord = currentWord.trim().toLowerCase()
+
+const chatBox=document.getElementById("guessChat")
+
+const div=document.createElement("div")
+
+div.style.padding="6px"
+div.style.borderBottom="1px solid #1e293b"
+
+if(guessText === correctWord){
+
+div.innerHTML = "🏆 <b style='color:#38bdf8'>"+g.player+
+"</b> guessed the correct word: <b>"+g.text+"</b>"
+
+div.style.background="#020617"
+div.style.border="1px solid #38bdf8"
+div.style.boxShadow="0 0 10px #38bdf8"
+
+}else{
+
+div.innerText=g.player+" guessed: "+g.text
+
+}
+
+chatBox.appendChild(div)
+
+chatBox.scrollTop = chatBox.scrollHeight
+
+if(guessText === correctWord && !winnerAnnounced){
+
+winnerAnnounced = true
+
+showWinnerPopup(g.player,g.text)
+
+setTimeout(()=>{
+resetGame()
+winnerAnnounced = false
+},3000)
+
+}
+
+})
+
+function showWinnerPopup(player,word){
+
+const popup=document.getElementById("winnerPopup")
+const text=document.getElementById("winnerText")
+
+text.innerText="🏆 "+player+" guessed the word '"+word+"'!"
+
+popup.style.display="flex"
+
+setTimeout(()=>{
+popup.style.display="none"
+},3000)
+
+}
+
+/* RESET GAME */
+
+function resetGame(){
+
+gameRef.remove()
+
+document.getElementById("drawingGame").style.display="none"
+
+document.getElementById("guessChat").innerHTML=""
+
+document.getElementById("playerName").style.display="inline-block"
+
+document.getElementById("createBtn").style.display="inline-block"
+document.getElementById("joinBtn").style.display="none"
+
+ctxDraw.clearRect(0,0,canvasDraw.width,canvasDraw.height)
+
+}
+
+/* END GAME BUTTON */
+
+window.endGame=function(){
+
+gameRef.remove()
+
+document.getElementById("drawingGame").style.display="none"
+
+document.getElementById("playerName").value=""
+
+document.getElementById("playerName").style.display="inline-block"
+
+document.getElementById("createBtn").style.display="inline-block"
+document.getElementById("joinBtn").style.display="none"
+
+document.getElementById("guessChat").innerHTML=""
+
+ctxDraw.clearRect(0,0,canvasDraw.width,canvasDraw.height)
+
+document.getElementById("gameStatus").innerText=
+"Game finished. Create a new game."
+
+}
+
+const chatBox = document.querySelector(".chat-box")
+const usernameInput = document.getElementById("username")
+const messageInput = document.getElementById("message")
+
+document.getElementById("guessInput").addEventListener("keypress",function(e){
+if(e.key==="Enter") sendGuess()
+})
+
+let typingTimer
+
+function handleTyping(){
+
+chatBox.classList.add("active")
+
+clearTimeout(typingTimer)
+
+typingTimer = setTimeout(()=>{
+chatBox.classList.remove("active")
+},3000)
+
+}
+
+usernameInput.addEventListener("input", handleTyping)
+messageInput.addEventListener("input", handleTyping)
+
+window.sendMessage=function(){
+
+const username=document.getElementById("username").value
+const message=document.getElementById("message").value
+
+if(username===""||message==="") return
+
+db.ref("messages").push({
+username:username,
+text:message,
+time:Date.now()
+})
+
+document.getElementById("message").value=""
+
+
+
+}
+
+db.ref("messages").limitToLast(100).on("child_added",(snapshot)=>{
+
+const data=snapshot.val()
+
+const msg=document.createElement("div")
+msg.className="msg"
+
+let date = new Date(data.time)
+
+let timeString =
+date.toLocaleDateString() +
+" " +
+date.toLocaleTimeString()
+
+msg.innerHTML =
+"<b>"+data.username+":</b> "+data.text+
+"<div class='msg-time'>"+timeString+"</div>"
+
+messagesDiv.appendChild(msg)
+
+messagesDiv.scrollTop = messagesDiv.scrollHeight
+
+})
+
+})
+
+/* =========================
+SNAKE GAME
+========================= */
+
+let snake = []
+let snakeDir = 'right'
+let snakeInterval = null
+let food = null
+let scoreSnake = 0
+
+function startSnake(){
+    if(snakeInterval) return
+
+    snake = [{x:8, y:8}]
+    snakeDir = 'right'
+    scoreSnake = 0
+    document.getElementById("gameArea").classList.add("active")
+    document.getElementById('score').textContent = scoreSnake
+    placeFood()
+    renderSnake()
+
+    snakeInterval = setInterval(moveSnake, 200)
+}
+
+function restartSnake(){
+    clearInterval(snakeInterval)
+    snakeInterval = null
+    document.getElementById('gameArea').innerHTML = ''
+    startSnake()
+}
+
+function changeDirection(dir){
+    // cegah berbalik arah langsung
+    if(dir==='up' && snakeDir!=='down') snakeDir='up'
+    if(dir==='down' && snakeDir!=='up') snakeDir='down'
+    if(dir==='left' && snakeDir!=='right') snakeDir='left'
+    if(dir==='right' && snakeDir!=='left') snakeDir='right'
+}
+
+function moveSnake(){
+    const head = {...snake[0]}
+    if(snakeDir==='up') head.y -= 1
+    if(snakeDir==='down') head.y += 1
+    if(snakeDir==='left') head.x -= 1
+    if(snakeDir==='right') head.x += 1
+
+    // cek tabrakan dinding
+    if(head.x < 0 || head.x >= 20 || head.y < 0 || head.y >= 20 || snake.some(seg => seg.x===head.x && seg.y===head.y)){
+        gameOverSnake()
+        return
+    }
+
+    snake.unshift(head)
+
+    // cek makan food
+    if(food && head.x===food.x && head.y===food.y){
+        scoreSnake++
+        document.getElementById('score').textContent = scoreSnake
+        placeFood()
+    } else {
+        snake.pop()
+    }
+
+    renderSnake()
+}
+
+function renderSnake(){
+    const gameArea = document.getElementById('gameArea')
+    gameArea.innerHTML = ''
+
+    // render food
+    if(food){
+        const f = document.createElement('div')
+        f.className='food'
+        f.style.left = food.x*20 + 'px'
+        f.style.top = food.y*20 + 'px'
+        f.innerHTML = '🍎'
+        gameArea.appendChild(f)
+    }
+
+    // render snake
+    snake.forEach(seg => {
+        const s = document.createElement('div')
+        s.className='snake-segment'
+        s.style.left = seg.x*20 + 'px'
+        s.style.top = seg.y*20 + 'px'
+        s.innerHTML = '🐍'
+        gameArea.appendChild(s)
+    })
+}
+
+function placeFood(){
+    let x = Math.floor(Math.random()*20)
+    let y = Math.floor(Math.random()*20)
+    // pastikan food tidak di snake
+    while(snake.some(seg => seg.x===x && seg.y===y)){
+        x = Math.floor(Math.random()*20)
+        y = Math.floor(Math.random()*20)
+    }
+    food = {x,y}
+}
+
+function gameOverSnake(){
+    clearInterval(snakeInterval)
+    snakeInterval=null
+
+    const gameArea = document.getElementById('gameArea')
+
+    /* MATIKAN GLOW */
+    gameArea.classList.remove("active")
+
+    gameArea.innerHTML = `<div style="text-align:center; padding:80px 20px;">
+        <h2>Game Over</h2>
+        <p>Your Score: ${scoreSnake}</p>
+        <button class="game-btn" onclick="startSnake()">Play Again</button>
+    </div>`
+}
+
+/* =========================
+BACK TO TOP BUTTON
+========================= */
+
+const backBtn = document.getElementById("backToTop")
+
+window.addEventListener("scroll",()=>{
+
+if(window.scrollY > 400){
+
+backBtn.classList.add("show")
+
+}else{
+
+backBtn.classList.remove("show")
+
+}
+
+})
+
+window.addEventListener("scroll",()=>{
+
+const footer = document.querySelector(".footer")
+
+if(!footer) return
+
+const footerRect = footer.getBoundingClientRect()
+
+const margin = 20
+
+if(footerRect.top < window.innerHeight){
+
+const overlap = window.innerHeight - footerRect.top
+
+backBtn.style.bottom = (70 + Math.min(overlap,150) + margin) + "px"
+
+}else{
+
+backBtn.style.bottom = "70px"
+
+}
+
+})
+
+backBtn.addEventListener("click",()=>{
+
+window.scrollTo({
+
+top:0,
+behavior:"smooth"
+
+})
+
+})
+
+/* =========================
+AUTO HIDE FLOATING BUTTONS AT FOOTER
+========================= */
+
+const musicBtn = document.querySelector(".music-btn")
+const clockWidget = document.querySelector(".clock")
+const backTopBtn = document.getElementById("backToTop")
+
+window.addEventListener("scroll",()=>{
+
+const scrollPosition = window.innerHeight + window.scrollY
+const pageHeight = document.body.offsetHeight
+
+/* jika user hampir sampai bawah halaman */
+
+if(scrollPosition >= pageHeight - 60){
+
+musicBtn.classList.add("hide-floating")
+clockWidget.classList.add("hide-floating")
+backTopBtn.classList.add("hide-floating")
+
+}else{
+
+musicBtn.classList.remove("hide-floating")
+clockWidget.classList.remove("hide-floating")
+backTopBtn.classList.remove("hide-floating")
+
+}
+
+})
+
+/* =========================
+AUTO HIDE NAVBAR
+========================= */
+
+let lastScroll = 0
+const navbar = document.querySelector(".navbar")
+
+window.addEventListener("scroll", () => {
+
+let currentScroll = window.pageYOffset
+
+if(currentScroll > lastScroll){
+navbar.style.top = "-100px"
+}else{
+navbar.style.top = "20px"
+}
+
+lastScroll = currentScroll
+
+})
+
+/* =========================
+LOADING SCREEN
+========================= */
+
+/* =========================
+LOADING + INTRO
+========================= */
+
+window.addEventListener("load", function(){
+
+window.scrollTo(0,0)
+
+const loader = document.getElementById("loader")
+const intro = document.getElementById("intro")
+
+/* hilangkan loader */
+
+loader.style.opacity = "0"
+
+setTimeout(()=>{
+
+loader.style.display = "none"
+
+/* tampilkan intro */
+
+intro.style.opacity = "1"
+intro.style.pointerEvents = "auto"
+
+
+
+},600)
+
+/* intro hilang setelah beberapa detik */
+
+setTimeout(()=>{
+
+intro.style.opacity="0"
+
+setTimeout(()=>{
+
+intro.style.display="none"
+
+},800)
+
+},4000)
+
+})
+
+/* =========================
+AUTO YEAR COPYRIGHT
+========================= */
+
+window.addEventListener("load", function(){
+document.getElementById("year").textContent = new Date().getFullYear()
+})
+
+</script>
+
+<footer class="footer" id="footer">
+
+<p class="copyright">
+© <span id="year"></span> X PPLG Skye Digipreneur
+</p>
+
+<p class="developer">
+Website developed by Kevin Al Faridzi
+</p>
+
+</footer>
+
+<div id="winnerPopup" style="
+position:fixed;
+top:0;
+left:0;
+width:100%;
+height:100%;
+display:none;
+align-items:center;
+justify-content:center;
+background:rgba(0,0,0,0.7);
+z-index:10000;
+">
+
+<div class="winner-box">
+
+<h2 id="winnerText" style="
+color:#38bdf8;
+text-shadow:0 0 10px #38bdf8,0 0 25px #0ea5e9;
+">
+Winner
+</h2>
+
+</div>
+</div>
+
+</body>
+</html>

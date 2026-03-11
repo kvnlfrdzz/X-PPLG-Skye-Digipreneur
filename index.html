@@ -36,7 +36,7 @@ transform: translateX(-50%);
 display: flex;
 justify-content: space-between;
 align-items: center;
-flex-wrap: nowrap;
+flex-wrap: wrap;
 gap: 10px;
 padding: 15px 25px;
 z-index: 999;
@@ -45,7 +45,7 @@ max-width: 1100px;
 
 /* HAPUS SCROLL */
 overflow-x: hidden;
-white-space: nowrap;
+white-space: normal;
 
 /* Efek glass */
 background: linear-gradient(
@@ -76,7 +76,8 @@ backdrop-filter 0.4s ease;
     font-weight: 500;
     transition: 0.3s;
     position: relative;
-    flex:1;
+flex: none;
+padding:6px 8px;
 text-align:center;
 }
 
@@ -527,6 +528,16 @@ body {
 /* RESPONSIVE UNTUK MOBILE / TABLET */
 @media (max-width: 768px) {
 
+    .navbar{
+flex-wrap:wrap;
+justify-content:center;
+}
+
+.navbar a{
+font-size:12px;
+padding:6px;
+}
+
     #drawCanvas{
 width:100%;
 max-width:100%;
@@ -700,7 +711,7 @@ backdrop-filter: saturate(200%) blur(18px);
     background:#38bdf8;
     color:black;
     transform: translateY(-5px) scale(1.05);
-    box-shadow: 0 0 20px #38bdf8, 0 0 40px #0ea5e9;
+box-shadow: 0 0 12px #38bdf8, 0 0 24px #0ea5e9;
 }
 
 .snake-segment {
@@ -756,10 +767,9 @@ FLOATING BUTTON HIDE SYSTEM
 ========================= */
 
 .hide-floating{
-opacity:0;
+opacity:0 !important;
 transform:translateY(40px);
 pointer-events:none;
-transition:0.3s;
 }
 
 /* =========================
@@ -1180,6 +1190,70 @@ inset 0 -4px 8px rgba(0,0,0,0.6),
 
 #drawCanvas{
 touch-action:none;
+width:100%;
+max-width:400px;
+height:auto;
+}
+
+/* =========================
+PLAYER LIST SCROLLBAR STYLE
+========================= */
+
+#playerList{
+
+max-height:120px;
+overflow-y:auto;
+
+padding-right:18px;
+padding-left:4px;
+
+}
+
+#playerList::-webkit-scrollbar{
+width:10px;
+}
+
+#playerList::-webkit-scrollbar-track{
+margin-right:6px;
+}
+
+#playerList::-webkit-scrollbar-thumb{
+
+background:linear-gradient(
+180deg,
+#38bdf8,
+#0ea5e9
+);
+
+border-radius:10px;
+
+border:2px solid rgba(255,255,255,0.15);
+
+box-shadow:
+inset 0 2px 4px rgba(255,255,255,0.3),
+inset 0 -3px 6px rgba(0,0,0,0.4),
+0 0 10px #38bdf8,
+0 0 20px #0ea5e9;
+
+transition:0.2s;
+
+}
+
+#playerList::-webkit-scrollbar-thumb:active{
+
+background:linear-gradient(
+180deg,
+#7dd3fc,
+#38bdf8
+);
+
+box-shadow:
+inset 0 2px 5px rgba(255,255,255,0.4),
+inset 0 -4px 8px rgba(0,0,0,0.6),
+0 0 20px #38bdf8,
+0 0 40px #0ea5e9,
+0 0 70px #38bdf8;
+
 }
 
 /* =========================
@@ -1207,6 +1281,36 @@ box-shadow:
 0 0 25px #38bdf8,
 0 0 50px #0ea5e9;
 
+}
+
+#chat input{
+width:100%;
+margin-bottom:10px;
+}
+
+#chat button{
+width:100%;
+}
+
+.chat-box{
+overflow:hidden;
+}
+
+#chat{
+max-width:100%;
+}
+
+#chat input{
+width:100%;
+box-sizing:border-box;
+}
+
+.chat-btn{
+width:140px;
+margin-top:8px;
+display:block;
+margin-left:auto;
+margin-right:auto;
 }
 
 </style>
@@ -1474,7 +1578,26 @@ Welcome to the official X PPLG Skye Digipreneur website. This website features s
 
 <div id="drawingGame" style="display:none;text-align:center;">
 
+<div style="margin-bottom:10px;font-size:14px;opacity:0.9;">
+
+<div id="drawerBox" style="margin-bottom:6px;"></div>
+
+<div id="playerList" style="
+max-height:120px;
+overflow-y:auto;
+"></div>
+
+</div>
+
 <p id="gameStatus">Waiting players...</p>
+
+<div id="gameTimer" style="
+margin-top:6px;
+font-size:14px;
+opacity:0.9;
+">
+⏳ Timer will start when drawer begins drawing
+</div>
 
 <canvas id="drawCanvas" width="400" height="400"
 style="background:white;border-radius:10px;border:1px solid #1e293b;"></canvas>
@@ -1943,15 +2066,120 @@ let isDrawer=false
 let currentWord=""
 let winnerAnnounced = false
 
+let lastDrawerName = ""
+
+let timerStarted=false
+let timerInterval=null
+let timeLeft=30
+
+let playerInGame = false
+
+/* =========================
+CHECK DUPLICATE PLAYER NAME
+========================= */
+
+function isNameTaken(name, players){
+
+if(!players) return false
+
+name = name.toLowerCase()
+
+for(let p in players){
+
+if(p.toLowerCase() === name){
+return true
+}
+
+}
+
+return false
+
+}
+
 const words=[
 "kucing","mobil","rumah","gunung","pohon",
-"ikan","pesawat","bintang","buku","sepeda"
+"ikan","pesawat","bintang","buku","sepeda","anjing","ayam","bebek","sapi","kuda","gajah","singa","harimau","monyet","ular","katak","kupu kupu","lebah","semut","lalat","nyamuk","tikus","kelinci","domba","kambing","jerapah","zebra","hiu","paus","gurita","kepiting","udang","kerang","bunga","daun","rumput","buah","apel","jeruk","pisang","mangga","semangka","nanas","stroberi","kelapa","tomat","wortel","kentang","jagung","roti","nasi","mie","telur","keju","donat","kue","es krim","matahari","bulan","awan","hujan","pelangi","laut","pantai","pulau","danau","sungai","api","asap","petir","salju","es","balon","bola","layang layang","kapal","helikopter","roket","kereta","bus","truk","robot","kastil","menara","jembatan","jalan","tenda","kolam","gua","hutan","kaktus","jamur","batu","bendera","mahkota","pedang","perisai","helm","topi","sepatu","tas","hadiah","pintu","jendela","tangga","kotak"
 ]
 
 const gameRef=db.ref("drawingGame")
 
-/* RESET GAME SAAT PAGE LOAD */
+gameRef.on("value",(snap)=>{
+
+const listDiv=document.getElementById("playerList")
+const drawerDiv=document.getElementById("drawerBox")
+
+if(!snap.exists()){
+listDiv.innerHTML=""
+return
+}
+
+const data = snap.val()
+const players = data.players || {}
+const drawerName = data.drawer || ""
+
+lastDrawerName = drawerName
+
+let html="<b>Players:</b><br>"
+let count=0
+
+/* tampilkan drawer di box khusus */
+
+if(drawerName){
+drawerDiv.innerHTML = "👑 <b>Drawer:</b> " + drawerName
+}else{
+drawerDiv.innerHTML = ""
+}
+
+/* tampilkan player lain */
+
+for(let p in players){
+
+if(p === drawerName) continue
+
+count++
+
+html += "👤 " + p + "<br>"
+
+}
+
+html += "<br>Total: " + (count + (drawerName ? 1 : 0))
+
+listDiv.innerHTML = html
+
+})
+
+const connectedRef = firebase.database().ref(".info/connected")
+
+function setupDrawerDisconnect(){
+
+connectedRef.on("value",(snap)=>{
+
+if(snap.val() === true && isDrawer){
+
+gameRef.child("status").onDisconnect().set("drawer_disconnect")
+
+gameRef.child("players").child(player).onDisconnect().remove()
+
+}
+
+})
+
+}
+
+/* =========================
+DRAWER REFRESH DETECTION
+========================= */
+
+window.addEventListener("beforeunload",function(){
+
+if(isDrawer && playerInGame){
+
+gameRef.child("status").set("drawer_disconnect")
 gameRef.remove()
+
+}
+
+})
 
 let canvasListening=false
 
@@ -1960,6 +2188,8 @@ let canvasListening=false
 gameRef.on("value",(snap)=>{
 
 const data = snap.val()
+
+if(playerInGame) return
 
 const createBtn = document.getElementById("createBtn")
 const joinBtn = document.getElementById("joinBtn")
@@ -1972,6 +2202,28 @@ if(data && !data.drawer){
 
 gameRef.remove()
 return
+
+}
+
+/* FAILSAFE: jika drawer benar-benar hilang */
+
+if(data && data.players && data.drawer){
+
+if(!data.players[data.drawer]){
+
+/* pastikan hanya berhenti jika drawer yang hilang */
+
+gameRef.child("status").once("value",(s)=>{
+
+const st = s.val()
+
+if(st !== "drawer_disconnect"){
+gameRef.child("status").set("drawer_disconnect")
+}
+
+})
+
+}
 
 }
 
@@ -2048,12 +2300,22 @@ const word=words[Math.floor(Math.random()*words.length)]
 currentWord=word
 isDrawer=true
 
+setupDrawerDisconnect()
+
+playerInGame = true
+
 gameRef.set({
 drawer:player,
+players:{
+[ player ]: true
+},
 word:word,
 canvas:{},
-started:true
+started:true,
+status:"playing"
 })
+
+gameRef.child("players").child(player).onDisconnect().remove()
 
 document.getElementById("drawingGame").style.display="block"
 
@@ -2098,8 +2360,28 @@ alert("No game available")
 return
 }
 
+/* CEK NAMA DUPLIKAT */
+
+if(data.players && isNameTaken(player,data.players)){
+
+alert("This name is already used in the game. Please choose another name.")
+
+return
+
+}
+
 currentWord=data.word
 isDrawer=false
+
+playerInGame = true
+
+gameRef.child("players").update({
+[player]:true
+})
+
+/* AUTO REMOVE PLAYER IF DISCONNECT */
+
+gameRef.child("players").child(player).onDisconnect().remove()
 
 document.getElementById("drawingGame").style.display="block"
 
@@ -2117,9 +2399,11 @@ document.getElementById("gameStatus").innerText="Guess the drawing!"
 
 canvasDraw.style.cursor="not-allowed"
 
-})
+/* PINDAH listenCanvas KE SINI */
 
 listenCanvas()
+
+})
 
 }
 
@@ -2128,6 +2412,9 @@ listenCanvas()
 canvasDraw.addEventListener("mousedown",()=>{
 
 if(!isDrawer)return
+
+startGameTimer()
+
 drawing=true
 
 })
@@ -2144,8 +2431,11 @@ if(!drawing||!isDrawer)return
 
 const rect=canvasDraw.getBoundingClientRect()
 
-const x=e.clientX-rect.left
-const y=e.clientY-rect.top
+const scaleX = canvasDraw.width / rect.width
+const scaleY = canvasDraw.height / rect.height
+
+const x=(e.clientX-rect.left)*scaleX
+const y=(e.clientY-rect.top)*scaleY
 
 ctxDraw.fillStyle="black"
 
@@ -2164,6 +2454,9 @@ gameRef.child("canvas").push({x,y})
 canvasDraw.addEventListener("touchstart",(e)=>{
 
 if(!isDrawer)return
+
+startGameTimer()
+
 drawing=true
 
 })
@@ -2181,11 +2474,13 @@ if(!drawing || !isDrawer) return
 e.preventDefault()
 
 const rect = canvasDraw.getBoundingClientRect()
+const scaleX = canvasDraw.width / rect.width
+const scaleY = canvasDraw.height / rect.height
 
 const touch = e.touches[0]
 
-const x = touch.clientX - rect.left
-const y = touch.clientY - rect.top
+const x = (touch.clientX - rect.left) * scaleX
+const y = (touch.clientY - rect.top) * scaleY
 
 ctxDraw.fillStyle="black"
 
@@ -2219,6 +2514,133 @@ ctxDraw.fill()
 })
 
 }
+
+function startGameTimer(){
+
+if(timerStarted) return
+
+timerStarted=true
+timeLeft=30
+
+gameRef.child("timer").set(timeLeft)
+
+timerInterval=setInterval(()=>{
+
+timeLeft--
+
+gameRef.child("timer").set(timeLeft)
+
+if(timeLeft<=0){
+
+clearInterval(timerInterval)
+
+gameRef.child("status").set("time_up")
+
+}
+
+},1000)
+
+}
+
+/* =========================
+GAME STATUS LISTENER
+========================= */
+
+gameRef.child("timer").on("value",(snap)=>{
+
+const timerDiv=document.getElementById("gameTimer")
+
+if(!snap.exists()){
+timerDiv.innerText="⏳ Timer will start when drawer begins drawing"
+return
+}
+
+const t=snap.val()
+
+timerDiv.innerText="⏳ Time left: "+t+"s"
+
+})
+
+gameRef.child("status").on("value",(snap)=>{
+
+const status = snap.val()
+
+if(!status) return
+
+if(!playerInGame) return
+
+gameRef.once("value",(s)=>{
+
+const data = s.val()
+const drawerName = data?.drawer || lastDrawerName || "Drawer"
+
+/* =====================
+DRAWER MANUAL END
+===================== */
+
+if(status === "ended_by_drawer"){
+
+if(!isDrawer){
+showEndPopup("Game ended by drawer: "+drawerName)
+}
+
+setTimeout(()=>{
+resetGame()
+},300)
+
+}
+
+/* =====================
+DRAWER DISCONNECT
+===================== */
+
+if(status === "drawer_disconnect"){
+
+showEndPopup("Game ended because drawer left: "+drawerName)
+
+setTimeout(()=>{
+resetGame()
+},300)
+
+}
+
+/* =====================
+TIME UP
+===================== */
+
+if(status === "time_up"){
+
+const word = data?.word || currentWord || "unknown"
+
+/* jika player */
+
+if(!isDrawer){
+
+showEndPopup("⏰ Time is up! The word was: "+word,4500)
+
+setTimeout(()=>{
+resetGame()
+},4500)
+
+}
+
+/* jika drawer */
+
+else{
+
+showEndPopup("⏰ Time is up!",3000)
+
+setTimeout(()=>{
+resetGame()
+},300)
+
+}
+
+}
+
+})
+
+})
 
 /* GUESS SYSTEM */
 
@@ -2302,11 +2724,45 @@ popup.style.display="none"
 
 }
 
+function showEndPopup(text,duration=3000){
+
+const popup=document.getElementById("winnerPopup")
+const title=document.getElementById("winnerText")
+
+title.innerText=text
+
+popup.style.display="flex"
+
+setTimeout(()=>{
+popup.style.display="none"
+},duration)
+
+}
+
 /* RESET GAME */
 
 function resetGame(){
 
+clearInterval(timerInterval)
+timerStarted=false
+timeLeft=30
+
+gameRef.child("timer").remove()
+
+const timerDiv=document.getElementById("gameTimer")
+
+if(timerDiv){
+timerDiv.innerText="⏳ Timer will start when drawer begins drawing"
+}
+
+canvasListening=false
+gameRef.child("canvas").off()
+
 gameRef.remove()
+
+playerInGame = false
+isDrawer = false
+currentWord = ""
 
 document.getElementById("drawingGame").style.display="none"
 
@@ -2325,12 +2781,19 @@ ctxDraw.clearRect(0,0,canvasDraw.width,canvasDraw.height)
 
 window.endGame=function(){
 
+gameRef.child("status").set("ended_by_drawer")
+
+setTimeout(()=>{
 gameRef.remove()
+},100)
+
+playerInGame = false
+isDrawer = false
+currentWord = ""
 
 document.getElementById("drawingGame").style.display="none"
 
 document.getElementById("playerName").value=""
-
 document.getElementById("playerName").style.display="inline-block"
 
 document.getElementById("createBtn").style.display="inline-block"

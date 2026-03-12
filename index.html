@@ -2696,8 +2696,10 @@ gameRef.child("canvas").push({
 x,
 y,
 color:brushColor,
-start: lastX===x && lastY===y
+start:newStroke
 })
+
+newStroke=false
 
 },{passive:false})
 
@@ -2710,8 +2712,12 @@ canvasListening=true
 
 let prevX=null
 let prevY=null
+let drawnStrokes = {}
 
 gameRef.child("canvas").on("child_added",(snap)=>{
+
+if(drawnStrokes[snap.key]) return
+drawnStrokes[snap.key] = true
 
 const d=snap.val()
 
@@ -2976,6 +2982,9 @@ popup.style.display="none"
 /* RESET GAME */
 
 function resetGame(){
+
+lastX=null
+lastY=null
 
 clearInterval(timerInterval)
 timerStarted=false
@@ -3466,7 +3475,6 @@ Winner
 
 </body>
 </html>
-
 
 
 

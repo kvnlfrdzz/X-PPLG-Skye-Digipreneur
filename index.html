@@ -2275,7 +2275,7 @@ return
 
 const data = snap.val()
 const players = data.players || {}
-const drawerName = data.drawer || ""
+const drawerName = data.drawer || lastDrawerName || ""
 
 lastDrawerName = drawerName
 

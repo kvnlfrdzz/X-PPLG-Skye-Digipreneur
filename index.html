@@ -1683,6 +1683,25 @@ Welcome to the official X PPLG website. This website features student and homero
 
 <h2 class="section-title">Multiplayer Drawing Guess</h2>
 
+<div id="gameLobbyInfo" style="
+max-width:500px;
+margin:0 auto 20px auto;
+padding:15px;
+background:#020617;
+border:1px solid #1e293b;
+border-radius:10px;
+box-shadow:0 0 10px #38bdf8;
+font-size:14px;
+text-align:left;
+">
+
+<b>🎮 Game Lobby</b>
+<br><br>
+
+<span id="lobbyStatus">Checking game status...</span>
+
+</div>
+
 <div style="text-align:center;margin-bottom:20px;">
 <input id="playerName" placeholder="Your name">
 <button class="game-btn" id="createBtn" onclick="createGame()">Create Game</button>
@@ -2263,6 +2282,92 @@ const words=[
 
 const gameRef=db.ref("drawingGame")
 
+/* =========================
+GAME LOBBY INFO SYSTEM
+========================= */
+
+const lobbyStatus = document.getElementById("lobbyStatus")
+const lobbyBox = document.getElementById("gameLobbyInfo")
+
+gameRef.on("value",(snap)=>{
+
+if(playerInGame){
+
+/* sembunyikan seluruh box lobby */
+
+lobbyBox.style.display = "none"
+return
+
+}else{
+
+lobbyBox.style.display = "block"
+
+}
+
+if(!snap.exists()){
+
+lobbyStatus.innerHTML = `
+Status: <b style="color:#7dd3fc">No game running</b>
+<br>Players: 0
+<br>Drawer: -
+<br>Game Started: No
+`
+
+return
+
+}
+
+const data = snap.val()
+
+const players = data.players || {}
+const drawer = data.drawer || "Unknown"
+
+let playerList = ""
+let count = 0
+
+for(let p in players){
+
+/* jangan tampilkan drawer di player list */
+
+if(p === drawer) continue
+
+playerList += "👤 "+p+"<br>"
+count++
+
+}
+
+let started = "No"
+
+if(data.timer || data.canvas){
+started = "Yes"
+}
+
+const timer = data.timer || 0
+
+lobbyStatus.innerHTML = `
+Status: <b style="color:#38bdf8">Game Running</b>
+<br><br>
+
+👑 Drawer: <b>${drawer}</b>
+<br><br>
+
+👥 Players:<br>
+${playerList}
+
+<br>
+🔢 Total Players: ${count}
+
+<br><br>
+
+⏳ Game Started: <b>${started}</b>
+
+<br><br>
+
+⏳ Time Left: <b>${timer}s</b>
+`
+
+})
+
 gameRef.on("value",(snap)=>{
 
 const listDiv=document.getElementById("playerList")
@@ -2270,6 +2375,7 @@ const drawerDiv=document.getElementById("drawerBox")
 
 if(!snap.exists()){
 listDiv.innerHTML=""
+drawerDiv.innerHTML=""
 return
 }
 
@@ -2294,7 +2400,11 @@ drawerDiv.innerHTML = ""
 
 for(let p in players){
 
-if(p === drawerName) continue
+/* jangan tampilkan drawer di player list */
+
+if(drawerName && p === drawerName){
+continue
+}
 
 count++
 
@@ -2520,6 +2630,16 @@ return
 gameRef.once("value",(snap)=>{
 
 const data=snap.val()
+
+/* CEK TIMER UNTUK ANTI CHEAT */
+
+if(data.timer && data.timer < 10){
+
+alert("⚠ You cannot join the game.\nLess than 10 seconds remaining.\nWait for the next round.")
+
+return
+
+}
 
 if(!data){
 alert("No game available")

@@ -2369,7 +2369,7 @@ return
 
 if(data && data.players && data.drawer){
 
-if(!data.players[data.drawer]){
+if(data.drawer && data.players && !data.players[data.drawer]){
 
 /* pastikan hanya berhenti jika drawer yang hilang */
 
@@ -2408,21 +2408,8 @@ return
 
 if(data.drawer){
 
-/* cek apakah canvas kosong */
-
-if(!data.canvas || Object.keys(data.canvas).length === 0){
-
-/* berarti game belum benar-benar dimulai */
-
-createBtn.style.display="inline-block"
-joinBtn.style.display="none"
-
-}else{
-
 createBtn.style.display="none"
 joinBtn.style.display="inline-block"
-
-}
 
 playerInput.style.display="inline-block"
 
@@ -2448,14 +2435,27 @@ window.createGame=function(){
 
 drawing=false
 
-document.getElementById("endGameBtn").style.display="inline-block"
-
 player=document.getElementById("playerName").value.trim()
 
 if(player===""){
 alert("Enter your name")
 return
 }
+
+/* CEK GAME SUDAH ADA ATAU BELUM */
+
+gameRef.once("value",(snap)=>{
+
+if(snap.exists()){
+
+alert("Game already exists. Please join the game.")
+
+return
+}
+
+/* jika belum ada game */
+
+document.getElementById("endGameBtn").style.display="inline-block"
 
 const word=words[Math.floor(Math.random()*words.length)]
 
@@ -2469,7 +2469,7 @@ playerInGame = true
 gameRef.set({
 drawer:player,
 players:{
-[ player ]: true
+[player]:true
 },
 word:word,
 canvas:{},
@@ -2496,11 +2496,11 @@ ctxDraw.clearRect(0,0,canvasDraw.width,canvasDraw.height)
 document.getElementById("guessChat").innerHTML=""
 gameRef.child("guesses").remove()
 
-/* aktifkan mode gambar */
-
 canvasDraw.style.cursor="crosshair"
 
 listenCanvas()
+
+})
 
 }
 

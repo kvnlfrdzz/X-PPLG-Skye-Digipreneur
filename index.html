@@ -2195,6 +2195,7 @@ let drawing=false
 let brushColor="black"
 let lastX=null
 let lastY=null
+let newStroke=true
 let isDrawer=false
 let currentWord=""
 let winnerAnnounced = false
@@ -2583,6 +2584,7 @@ if(!isDrawer)return
 startGameTimer()
 
 drawing=true
+newStroke=true
 
 })
 
@@ -2631,8 +2633,10 @@ gameRef.child("canvas").push({
 x,
 y,
 color:brushColor,
-start: lastX===x && lastY===y
+start:newStroke
 })
+
+newStroke=false
 
 })
 
@@ -2645,6 +2649,7 @@ if(!isDrawer)return
 startGameTimer()
 
 drawing=true
+newStroke=true
 
 })
 

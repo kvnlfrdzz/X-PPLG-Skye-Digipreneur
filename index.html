@@ -2355,7 +2355,7 @@ Status: <b style="color:#38bdf8">Game Running</b>
 ${playerList}
 
 <br>
-🔢 Total Players: ${count}
+🔢 Total Players: ${count + (drawer ? 1 : 0)}
 
 <br><br>
 
@@ -3595,6 +3595,7 @@ Winner
 
 </body>
 </html>
+
 
 
 

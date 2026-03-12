@@ -2445,7 +2445,6 @@ window.addEventListener("beforeunload",function(){
 if(isDrawer && playerInGame){
 
 gameRef.child("status").set("drawer_disconnect")
-gameRef.remove()
 
 }
 
@@ -2968,6 +2967,12 @@ resetGame()
 TIME UP
 ===================== */
 
+if(status === "guessed"){
+
+clearInterval(timerInterval)
+
+}
+
 if(status === "time_up"){
 
 const word = data?.word || currentWord || "unknown"
@@ -3057,6 +3062,9 @@ chatBox.scrollTop = chatBox.scrollHeight
 if(guessText === correctWord && !winnerAnnounced){
 
 winnerAnnounced = true
+
+clearInterval(timerInterval)
+gameRef.child("status").set("guessed")
 
 showWinnerPopup(g.player,g.text)
 
@@ -3595,7 +3603,6 @@ Winner
 
 </body>
 </html>
-
 
 
 

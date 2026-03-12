@@ -1715,7 +1715,7 @@ opacity:0.9;
 <canvas id="drawCanvas" width="400" height="400"
 style="background:white;border-radius:10px;border:1px solid #1e293b;"></canvas>
 
-<div id="colorPalette" style="margin-top:10px;">
+<div id="colorPalette" style="margin-top:10px;display:none;">
 <button class="colorBtn" style="background:black"></button>
 <button class="colorBtn" style="background:red"></button>
 <button class="colorBtn" style="background:blue"></button>
@@ -2236,11 +2236,11 @@ const words=[
 "apel","jeruk","pisang","mangga","nanas","melon","anggur","pir","lemon","ceri",
 "tomat","wortel","kentang","jagung","labu","terong","cabai","bawang","timun","pepaya",
 "roti","donat","kue","pizza","burger","permen","coklat","eskrim","biskuit","susu",
-"keju","telur","madu","nasi","mie","sup","bakso","sate","teh","kopi",
-"rumah","gedung","sekolah","kantor","toko","pasar","hotel","villa","kafe","resto",
-"kastil","menara","jembatan","jalan","tenda","kolam","sumur","bendungan","stadion","bandara",
+"keju","telur","madu","mie","sup","bakso","sate","teh","kopi","jus",
+"rumah","gedung","sekolah","kantor","toko","pasar","hotel","kafe","resto","kastil",
+"menara","jembatan","jalan","tenda","kolam","sumur","bendungan","stadion","bandara","terminal",
 "mobil","bus","truk","kereta","kapal","perahu","roket","tank","ambulans","traktor",
-"sepatu","sandal","topi","tas","dompet","kacamata","jaket","kaos","celana","rok",
+"sepeda","sepatu","sandal","topi","tas","dompet","kacamata","jaket","kaos","celana",
 "kursi","meja","lampu","sofa","lemari","rak","pintu","jendela","karpet","bantal",
 "selimut","kipas","kulkas","kompor","oven","blender","mixer","piring","mangkuk","sendok",
 "garpu","pisau","gelas","botol","ember","sapu","pel","sabun","sampo","handuk",
@@ -2248,26 +2248,16 @@ const words=[
 "kertas","buku","pensil","pulpen","spidol","penghapus","penggaris","gunting","lem","map",
 "radio","kamera","drum","gitar","piano","biola","terompet","mikrofon","speaker","tv",
 "komputer","laptop","tablet","ponsel","keyboard","mouse","printer","scanner","router","monitor",
-"bola","balon","layang","robot","boneka","kartu","dadu","puzzle","skate","sepeda",
+"bola","balon","layang","robot","boneka","kartu","dadu","puzzle","skate","helm",
 "matahari","bulan","bintang","awan","hujan","pelangi","petir","salju","angin","kabut",
 "gunung","pantai","laut","sungai","danau","pulau","hutan","gua","api","asap",
 "pasir","batu","rumput","daun","bunga","pohon","kaktus","jamur","akar","ranting",
 "polisi","dokter","guru","murid","pilot","kapten","petani","nelayan","hakim","koki",
 "raja","ratu","pangeran","putri","ninja","bajaklaut","badut","penyihir","alien","monster",
-"hantu","zombie","vampir","naga","robot","astronaut","astronom","ilmuwan","penari","penyanyi",
-"pelari","petinju","pemain","wasit","penjaga","kapal","peselancar","pemanah","pembalap","pendaki",
-"jam","kalender","kompas","magnet","baterai","charger","kabel","saklar","pipa","kran",
-"toilet","wastafel","bak","tong","drumair","tabung","papan","rantai","mur","baut",
-"paku","palu","obeng","gergaji","tang","kapak","sekop","cangkul","emberair","keran",
-"antena","parabola","satelit","teleskop","radar","meteor","planet","bumi","mars","venus",
-"saturnus","uranus","neptunus","komet","asteroid","galaksi","roda","ban","rem","setir",
-"pedal","rantai","helm","rompi","sarung","sabuk","mahkota","pedang","perisai","busur",
-"panah","tombak","kapak","lonceng","bel","alarm","sirene","lampu","neon","lilin",
-"senter","obor","apiunggul","bara","arang","abu","asap","awan","badai","topan",
-"ombak","arus","karang","kerang","udang","kepiting","gurita","cumi","belut","pari",
-"elang","merpati","pipit","bangau","pelikan","flamingo","kakatua","kenari","burunghantu","rajawali",
-"kumbang","lalat","nyamuk","capung","belalang","jangkrik","kecoak","rayap","ulat","kepompong",
-"labalaba","kalajengking","kepik","siput","bekicot","lintah","cacing","teripang","ubur","karang"
+"hantu","zombie","vampir","naga","astronaut","ilmuwan","penari","penyanyi","pelari","petinju",
+"pemain","wasit","penjaga","peselancar","pemanah","pembalap","pendaki","jam","kalender","kompas",
+"magnet","baterai","charger","kabel","saklar","pipa","kran","toilet","wastafel","bak",
+"tong","tabung","papan","mur","baut","paku","palu","obeng","gergaji","tang"
 ]
 
 const gameRef=db.ref("drawingGame")
@@ -2490,6 +2480,8 @@ gameRef.child("players").child(player).onDisconnect().remove()
 
 document.getElementById("drawingGame").style.display="block"
 
+document.getElementById("colorPalette").style.display="flex"
+
 document.getElementById("playerName").style.display="none"
 document.getElementById("createBtn").style.display="none"
 document.getElementById("joinBtn").style.display="none"
@@ -2557,6 +2549,8 @@ gameRef.child("players").update({
 gameRef.child("players").child(player).onDisconnect().remove()
 
 document.getElementById("drawingGame").style.display="block"
+
+document.getElementById("colorPalette").style.display="none"
 
 document.getElementById("playerName").style.display="none"
 document.getElementById("createBtn").style.display="none"
@@ -2633,7 +2627,12 @@ ctxDraw.stroke()
 lastX=x
 lastY=y
 
-gameRef.child("canvas").push({x,y,color:brushColor})
+gameRef.child("canvas").push({
+x,
+y,
+color:brushColor,
+start: lastX===x && lastY===y
+})
 
 })
 
@@ -2688,7 +2687,12 @@ ctxDraw.stroke()
 lastX = x
 lastY = y
 
-gameRef.child("canvas").push({x,y,color:brushColor})
+gameRef.child("canvas").push({
+x,
+y,
+color:brushColor,
+start: lastX===x && lastY===y
+})
 
 },{passive:false})
 
@@ -2699,6 +2703,9 @@ function listenCanvas(){
 if(canvasListening) return
 canvasListening=true
 
+let prevX=null
+let prevY=null
+
 gameRef.child("canvas").on("child_added",(snap)=>{
 
 const d=snap.val()
@@ -2707,10 +2714,29 @@ ctxDraw.strokeStyle=d.color || "black"
 ctxDraw.lineWidth=4
 ctxDraw.lineCap="round"
 
+/* jika ini awal stroke baru */
+
+if(d.start){
+
+prevX=d.x
+prevY=d.y
+return
+
+}
+
+if(prevX===null){
+prevX=d.x
+prevY=d.y
+return
+}
+
 ctxDraw.beginPath()
-ctxDraw.moveTo(d.x,d.y)
-ctxDraw.lineTo(d.x+0.1,d.y+0.1)
+ctxDraw.moveTo(prevX,prevY)
+ctxDraw.lineTo(d.x,d.y)
 ctxDraw.stroke()
+
+prevX=d.x
+prevY=d.y
 
 })
 

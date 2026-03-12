@@ -2828,7 +2828,9 @@ DRAWER DISCONNECT
 
 if(status === "drawer_disconnect"){
 
+if(!isDrawer){
 showEndPopup("Game ended because drawer left: "+drawerName)
+}
 
 setTimeout(()=>{
 resetGame()
@@ -3464,6 +3466,7 @@ Winner
 
 </body>
 </html>
+
 
 
 

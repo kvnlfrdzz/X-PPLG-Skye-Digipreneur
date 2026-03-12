@@ -530,6 +530,14 @@ body {
 /* RESPONSIVE UNTUK MOBILE / TABLET */
 @media (max-width: 768px) {
 
+/* CHAT BUTTON MOBILE FIX */
+
+.chat-btn{
+width:140px;
+height:38px;
+font-size:14px;
+}
+
 .navbar{
 flex-wrap: nowrap;
 justify-content:space-between;
@@ -1194,6 +1202,7 @@ inset 0 -4px 8px rgba(0,0,0,0.6),
 
 #drawCanvas{
 touch-action:none;
+image-rendering:auto;
 width:100%;
 max-width:400px;
 height:auto;
@@ -1292,7 +1301,7 @@ box-shadow:
 width:85%;
 display:block;
 
-margin:8px auto;
+margin:12px auto 20px auto;
 
 padding:12px;
 
@@ -1300,10 +1309,20 @@ border-radius:10px;
 
 }
 
+#username{
+width:40%;
+margin-left:0;
+margin-right:auto;
+}
+
 #chat button{
-width:140px;
+width:180px;
+height:42px;
 margin:10px auto;
-display:block;
+display:flex;
+align-items:center;
+justify-content:center;
+text-align:center;
 }
 
 .chat-box{
@@ -1314,17 +1333,13 @@ overflow:hidden;
 max-width:100%;
 }
 
-#chat input{
-width:100%;
-box-sizing:border-box;
-}
-
 .chat-btn{
-width:140px;
-margin-top:8px;
-display:block;
-margin-left:auto;
-margin-right:auto;
+width:180px;
+height:42px;
+margin-top:20px;
+display:flex;
+align-items:center;
+justify-content:center;
 }
 
 /* =========================
@@ -1736,8 +1751,6 @@ style="background:white;border-radius:10px;border:1px solid #1e293b;"></canvas>
 <div id="messages"></div>
 
 <input id="username" placeholder="username">
-
-<br><br>
 
 <input id="message" placeholder="message">
 
@@ -2649,6 +2662,7 @@ if(!drawing || !isDrawer) return
 e.preventDefault()
 
 const rect = canvasDraw.getBoundingClientRect()
+
 const scaleX = canvasDraw.width / rect.width
 const scaleY = canvasDraw.height / rect.height
 
@@ -2657,11 +2671,22 @@ const touch = e.touches[0]
 const x = (touch.clientX - rect.left) * scaleX
 const y = (touch.clientY - rect.top) * scaleY
 
-ctxDraw.fillStyle="black"
+ctxDraw.strokeStyle = brushColor
+ctxDraw.lineWidth = 4
+ctxDraw.lineCap = "round"
+
+if(lastX === null){
+lastX = x
+lastY = y
+}
 
 ctxDraw.beginPath()
-ctxDraw.arc(x,y,3,0,Math.PI*2)
-ctxDraw.fill()
+ctxDraw.moveTo(lastX,lastY)
+ctxDraw.lineTo(x,y)
+ctxDraw.stroke()
+
+lastX = x
+lastY = y
 
 gameRef.child("canvas").push({x,y,color:brushColor})
 

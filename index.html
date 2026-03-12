@@ -22,6 +22,7 @@ body{
 background:#0f172a;
 color:white;
 overflow-x:hidden;
+scroll-behavior:smooth;
 }
 
 /* NAVBAR */
@@ -1287,12 +1288,22 @@ box-shadow:
 }
 
 #chat input{
-width:100%;
-margin-bottom:10px;
+
+width:85%;
+display:block;
+
+margin:8px auto;
+
+padding:12px;
+
+border-radius:10px;
+
 }
 
 #chat button{
-width:100%;
+width:140px;
+margin:10px auto;
+display:block;
 }
 
 .chat-box{
@@ -1314,6 +1325,88 @@ margin-top:8px;
 display:block;
 margin-left:auto;
 margin-right:auto;
+}
+
+/* =========================
+FIX HOVER BUG ON TOUCHSCREEN
+========================= */
+
+@media (hover: none) {
+
+.navbar a:hover,
+.student:hover,
+.coach-card:hover,
+.gallery img:hover,
+.card:hover,
+.music-btn button:hover,
+.game-btn:hover,
+.chat-btn:hover,
+#backToTop:hover,
+.footer:hover,
+.hero:hover {
+    
+    transform: none !important;
+    box-shadow: none !important;
+    background: inherit !important;
+    color: inherit !important;
+}
+
+}
+
+/* TOUCH FEEDBACK */
+
+button:active,
+.music-btn button:active,
+.game-btn:active,
+.chat-btn:active{
+
+transform:scale(0.96);
+box-shadow:0 0 10px #38bdf8;
+
+}
+
+/* =========================
+BUTTON RIPPLE EFFECT
+========================= */
+
+.ripple{
+position:relative;
+overflow:hidden;
+}
+
+.ripple span{
+position:absolute;
+border-radius:50%;
+transform:scale(0);
+animation:rippleAnim 0.6s linear;
+background:rgba(255,255,255,0.4);
+}
+
+@keyframes rippleAnim{
+to{
+transform:scale(4);
+opacity:0;
+}
+}
+
+#colorPalette{
+display:flex;
+justify-content:center;
+gap:8px;
+flex-wrap:wrap;
+margin-top:10px;
+}
+
+.colorBtn{
+width:28px;
+height:28px;
+border-radius:50%;
+border:2px solid #1e293b;
+cursor:pointer;
+}
+
+.colorBtn:hover{
+transform:scale(1.1);
 }
 
 </style>
@@ -1606,6 +1699,17 @@ opacity:0.9;
 
 <canvas id="drawCanvas" width="400" height="400"
 style="background:white;border-radius:10px;border:1px solid #1e293b;"></canvas>
+
+<div id="colorPalette" style="margin-top:10px;">
+<button class="colorBtn" style="background:black"></button>
+<button class="colorBtn" style="background:red"></button>
+<button class="colorBtn" style="background:blue"></button>
+<button class="colorBtn" style="background:green"></button>
+<button class="colorBtn" style="background:yellow"></button>
+<button class="colorBtn" style="background:purple"></button>
+<button class="colorBtn" style="background:orange"></button>
+<button class="colorBtn" style="background:brown"></button>
+</div>
 
 <br><br>
 <button id="endGameBtn" class="game-btn" style="display:none;" onclick="endGame()">End Game</button>
@@ -2065,8 +2169,19 @@ MULTIPLAYER DRAWING GAME
 const canvasDraw = document.getElementById("drawCanvas")
 const ctxDraw = canvasDraw.getContext("2d")
 
+document.querySelectorAll(".colorBtn").forEach(btn=>{
+btn.addEventListener("click",()=>{
+
+brushColor = btn.style.background
+
+})
+})
+
 let player=""
 let drawing=false
+let brushColor="black"
+let lastX=null
+let lastY=null
 let isDrawer=false
 let currentWord=""
 let winnerAnnounced = false
@@ -2102,8 +2217,44 @@ return false
 }
 
 const words=[
-"kucing","mobil","rumah","gunung","pohon",
-"ikan","pesawat","bintang","buku","sepeda","anjing","ayam","bebek","sapi","kuda","gajah","singa","harimau","monyet","ular","katak","kupu kupu","lebah","semut","lalat","nyamuk","tikus","kelinci","domba","kambing","jerapah","zebra","hiu","paus","gurita","kepiting","udang","kerang","bunga","daun","rumput","buah","apel","jeruk","pisang","mangga","semangka","nanas","stroberi","kelapa","tomat","wortel","kentang","jagung","roti","nasi","mie","telur","keju","donat","kue","es krim","matahari","bulan","awan","hujan","pelangi","laut","pantai","pulau","danau","sungai","api","asap","petir","salju","es","balon","bola","layang layang","kapal","helikopter","roket","kereta","bus","truk","robot","kastil","menara","jembatan","jalan","tenda","kolam","gua","hutan","kaktus","jamur","batu","bendera","mahkota","pedang","perisai","helm","topi","sepatu","tas","hadiah","pintu","jendela","tangga","kotak"
+"kucing","anjing","ayam","bebek","sapi","kuda","gajah","singa","harimau","monyet",
+"kelinci","tikus","burung","ikan","hiu","paus","katak","ular","kura","jerapah",
+"zebra","panda","koala","kangguru","gorila","rusa","domba","kambing","babi","unta",
+"apel","jeruk","pisang","mangga","nanas","melon","anggur","pir","lemon","ceri",
+"tomat","wortel","kentang","jagung","labu","terong","cabai","bawang","timun","pepaya",
+"roti","donat","kue","pizza","burger","permen","coklat","eskrim","biskuit","susu",
+"keju","telur","madu","nasi","mie","sup","bakso","sate","teh","kopi",
+"rumah","gedung","sekolah","kantor","toko","pasar","hotel","villa","kafe","resto",
+"kastil","menara","jembatan","jalan","tenda","kolam","sumur","bendungan","stadion","bandara",
+"mobil","bus","truk","kereta","kapal","perahu","roket","tank","ambulans","traktor",
+"sepatu","sandal","topi","tas","dompet","kacamata","jaket","kaos","celana","rok",
+"kursi","meja","lampu","sofa","lemari","rak","pintu","jendela","karpet","bantal",
+"selimut","kipas","kulkas","kompor","oven","blender","mixer","piring","mangkuk","sendok",
+"garpu","pisau","gelas","botol","ember","sapu","pel","sabun","sampo","handuk",
+"cermin","sikat","pasta","payung","koper","kunci","gembok","rantai","kotak","keranjang",
+"kertas","buku","pensil","pulpen","spidol","penghapus","penggaris","gunting","lem","map",
+"radio","kamera","drum","gitar","piano","biola","terompet","mikrofon","speaker","tv",
+"komputer","laptop","tablet","ponsel","keyboard","mouse","printer","scanner","router","monitor",
+"bola","balon","layang","robot","boneka","kartu","dadu","puzzle","skate","sepeda",
+"matahari","bulan","bintang","awan","hujan","pelangi","petir","salju","angin","kabut",
+"gunung","pantai","laut","sungai","danau","pulau","hutan","gua","api","asap",
+"pasir","batu","rumput","daun","bunga","pohon","kaktus","jamur","akar","ranting",
+"polisi","dokter","guru","murid","pilot","kapten","petani","nelayan","hakim","koki",
+"raja","ratu","pangeran","putri","ninja","bajaklaut","badut","penyihir","alien","monster",
+"hantu","zombie","vampir","naga","robot","astronaut","astronom","ilmuwan","penari","penyanyi",
+"pelari","petinju","pemain","wasit","penjaga","kapal","peselancar","pemanah","pembalap","pendaki",
+"jam","kalender","kompas","magnet","baterai","charger","kabel","saklar","pipa","kran",
+"toilet","wastafel","bak","tong","drumair","tabung","papan","rantai","mur","baut",
+"paku","palu","obeng","gergaji","tang","kapak","sekop","cangkul","emberair","keran",
+"antena","parabola","satelit","teleskop","radar","meteor","planet","bumi","mars","venus",
+"saturnus","uranus","neptunus","komet","asteroid","galaksi","roda","ban","rem","setir",
+"pedal","rantai","helm","rompi","sarung","sabuk","mahkota","pedang","perisai","busur",
+"panah","tombak","kapak","lonceng","bel","alarm","sirene","lampu","neon","lilin",
+"senter","obor","apiunggul","bara","arang","abu","asap","awan","badai","topan",
+"ombak","arus","karang","kerang","udang","kepiting","gurita","cumi","belut","pari",
+"elang","merpati","pipit","bangau","pelikan","flamingo","kakatua","kenari","burunghantu","rajawali",
+"kumbang","lalat","nyamuk","capung","belalang","jangkrik","kecoak","rayap","ulat","kepompong",
+"labalaba","kalajengking","kepik","siput","bekicot","lintah","cacing","teripang","ubur","karang"
 ]
 
 const gameRef=db.ref("drawingGame")
@@ -2291,6 +2442,8 @@ playerInput.style.display="inline-block"
 
 window.createGame=function(){
 
+drawing=false
+
 document.getElementById("endGameBtn").style.display="inline-block"
 
 player=document.getElementById("playerName").value.trim()
@@ -2348,6 +2501,8 @@ listenCanvas()
 /* JOIN GAME */
 
 window.joinGame=function(){
+
+drawing=false
 
 player=document.getElementById("playerName").value.trim()
 
@@ -2425,9 +2580,15 @@ drawing=true
 })
 
 canvasDraw.addEventListener("mouseup",()=>{
-
 drawing=false
+lastX=null
+lastY=null
+})
 
+canvasDraw.addEventListener("mouseleave",()=>{
+drawing=false
+lastX=null
+lastY=null
 })
 
 canvasDraw.addEventListener("mousemove",(e)=>{
@@ -2442,15 +2603,24 @@ const scaleY = canvasDraw.height / rect.height
 const x=(e.clientX-rect.left)*scaleX
 const y=(e.clientY-rect.top)*scaleY
 
-ctxDraw.fillStyle="black"
+ctxDraw.strokeStyle=brushColor
+ctxDraw.lineWidth=4
+ctxDraw.lineCap="round"
+
+if(lastX===null){
+lastX=x
+lastY=y
+}
 
 ctxDraw.beginPath()
+ctxDraw.moveTo(lastX,lastY)
+ctxDraw.lineTo(x,y)
+ctxDraw.stroke()
 
-ctxDraw.arc(x,y,3,0,Math.PI*2)
+lastX=x
+lastY=y
 
-ctxDraw.fill()
-
-gameRef.child("canvas").push({x,y})
+gameRef.child("canvas").push({x,y,color:brushColor})
 
 })
 
@@ -2467,9 +2637,9 @@ drawing=true
 })
 
 canvasDraw.addEventListener("touchend",(e)=>{
-
 drawing=false
-
+lastX=null
+lastY=null
 })
 
 canvasDraw.addEventListener("touchmove",(e)=>{
@@ -2493,7 +2663,7 @@ ctxDraw.beginPath()
 ctxDraw.arc(x,y,3,0,Math.PI*2)
 ctxDraw.fill()
 
-gameRef.child("canvas").push({x,y})
+gameRef.child("canvas").push({x,y,color:brushColor})
 
 },{passive:false})
 
@@ -2508,13 +2678,14 @@ gameRef.child("canvas").on("child_added",(snap)=>{
 
 const d=snap.val()
 
-ctxDraw.fillStyle="black"
+ctxDraw.strokeStyle=d.color || "black"
+ctxDraw.lineWidth=4
+ctxDraw.lineCap="round"
 
 ctxDraw.beginPath()
-
-ctxDraw.arc(d.x,d.y,3,0,Math.PI*2)
-
-ctxDraw.fill()
+ctxDraw.moveTo(d.x,d.y)
+ctxDraw.lineTo(d.x+0.1,d.y+0.1)
+ctxDraw.stroke()
 
 })
 
@@ -2751,6 +2922,8 @@ function resetGame(){
 clearInterval(timerInterval)
 timerStarted=false
 timeLeft=30
+
+drawing = false
 
 gameRef.child("timer").remove()
 
@@ -3162,6 +3335,36 @@ AUTO YEAR COPYRIGHT
 
 window.addEventListener("load", function(){
 document.getElementById("year").textContent = new Date().getFullYear()
+})
+
+/* =========================
+RIPPLE BUTTON EFFECT
+========================= */
+
+document.querySelectorAll("button").forEach(btn=>{
+
+btn.classList.add("ripple")
+
+btn.addEventListener("click",function(e){
+
+const circle=document.createElement("span")
+
+const rect=this.getBoundingClientRect()
+
+const size=Math.max(rect.width,rect.height)
+
+circle.style.width=size+"px"
+circle.style.height=size+"px"
+
+circle.style.left=(e.clientX-rect.left-size/2)+"px"
+circle.style.top=(e.clientY-rect.top-size/2)+"px"
+
+this.appendChild(circle)
+
+setTimeout(()=>circle.remove(),600)
+
+})
+
 })
 
 </script>
